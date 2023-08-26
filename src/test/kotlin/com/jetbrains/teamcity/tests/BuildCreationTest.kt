@@ -21,7 +21,8 @@ class BuildCreationTest: BaseTest() {
     @User(ADMIN)
     @Test
     fun createBuildManually() {
-        projectsPage.refresh()
+        projectsPage.open()
+        projectsPage.shouldBeOpened()
         projectsPage.shouldListProject(createdProject)
         projectsPage.addBuildConfiguration(createdProject)
         createBuildPage.shouldBeOpened()

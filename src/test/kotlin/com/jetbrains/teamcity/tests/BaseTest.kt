@@ -2,8 +2,7 @@ package com.jetbrains.teamcity.tests
 
 import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import com.codeborne.selenide.testng.BrowserPerTest
-import com.jetbrains.teamcity.config.Storage
-import com.jetbrains.teamcity.config.Storage.Companion.cookieStorage
+import com.jetbrains.teamcity.api.AuthenticationApi
 import com.jetbrains.teamcity.config.UserCredentials
 import com.jetbrains.teamcity.ui.*
 import org.openqa.selenium.Cookie
@@ -30,7 +29,7 @@ abstract class BaseTest {
     protected val newBuildStepPage = NewBuildStepPage()
 
     companion object {
-        val log: Logger = LoggerFactory.getLogger(Storage::class.java.simpleName)
+        val log: Logger = LoggerFactory.getLogger(BaseTest::class.java.simpleName)
     }
 
     @BeforeMethod
@@ -42,15 +41,7 @@ abstract class BaseTest {
         }
         currentUser = currentUserType.user
         loginPage.open()
-        val loginCookie: Cookie? = cookieStorage[currentUser]
-        if (loginCookie != null) {
-            log.info("User $currentUser has already been logged in. Setting cookies.")
-            getWebDriver().manage().addCookie(loginCookie)
-            projectsPage.open()
-            return
-        }
-        loginPage.loginAs(currentUser)
-        projectsPage.shouldBeOpened()
-        cookieStorage[currentUser] = getWebDriver().manage().getCookieNamed("TCSESSIONID")
+        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie("TCSESSIONID")
+        getWebDriver().manage().addCookie(Cookie("TCSESSIONID", sessionCookie))
     }
 }

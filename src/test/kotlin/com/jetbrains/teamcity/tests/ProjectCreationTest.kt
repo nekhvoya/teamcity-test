@@ -12,6 +12,7 @@ class ProjectCreationTest: BaseTest() {
     @User(ADMIN)
     @Test
     fun createNewProjectManually() {
+        projectsPage.open()
         projectsPage.shouldBeOpened()
         projectsPage.createNewProject()
         createProjectPage.shouldBeOpened()

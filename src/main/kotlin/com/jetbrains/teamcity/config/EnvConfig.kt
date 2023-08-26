@@ -15,5 +15,6 @@ class EnvConfig {
         val editRunTypeUrl = "http://localhost:8111/admin/editRunType.html"
         val projectsEndpoint = "http://localhost:8111/app/rest/projects/"
         val buildsEndpoint = "http://localhost:8111/app/rest/buildTypes"
+        val authEndpoint = "http://localhost:8111/authenticationTest.html"
     }
 }

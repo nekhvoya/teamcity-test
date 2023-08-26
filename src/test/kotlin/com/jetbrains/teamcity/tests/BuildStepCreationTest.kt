@@ -29,7 +29,7 @@ class BuildStepCreationTest: BaseTest() {
     @User(ADMIN)
     @Test
     fun createBuildStep() {
-        projectsPage.refresh()
+        projectsPage.open()
         projectsPage.shouldBeOpened()
         projectsPage.expandProject(createdProject)
         projectsPage.shouldListBuildForProject(createdProject, createdBuild)
