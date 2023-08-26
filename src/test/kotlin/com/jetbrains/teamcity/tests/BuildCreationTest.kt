@@ -4,7 +4,7 @@ import com.jetbrains.teamcity.api.ProjectsApi
 import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.Project
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
@@ -14,7 +14,7 @@ class BuildCreationTest: BaseTest() {
 
     @BeforeMethod
     fun createNewProject() {
-        createdProject = Project(randomAlphabetic(10), randomAlphabetic(10))
+        createdProject = Project(randomString(), randomString())
         ProjectsApi(currentUser).createProject(createdProject)
     }
 

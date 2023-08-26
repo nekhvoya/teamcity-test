@@ -4,7 +4,7 @@ import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig
 import com.jetbrains.teamcity.data.Build
-import org.apache.commons.lang3.RandomStringUtils
+import com.jetbrains.teamcity.utils.randomString
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.name
 import org.slf4j.Logger
@@ -20,7 +20,7 @@ class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", 
     }
 
     fun createRandomBuild(): Build {
-        val name: String = RandomStringUtils.randomAlphabetic(10)
+        val name: String = randomString()
         typeName(name)
         val id: String = idInput.value
             .takeIf { it != null }

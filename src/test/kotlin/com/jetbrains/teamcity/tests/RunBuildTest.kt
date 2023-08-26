@@ -6,8 +6,7 @@ import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.data.*
 import com.jetbrains.teamcity.data.BuildType.SIMPLE_RUNNER
 import com.jetbrains.teamcity.data.StepProperty.*
-import com.jetbrains.teamcity.utils.randomName
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
@@ -19,14 +18,14 @@ class RunBuildTest: BaseTest() {
 
     @BeforeMethod
     fun createNewProject() {
-        createdProject = Project(randomAlphabetic(10), randomAlphabetic(10))
+        createdProject = Project(randomString(), randomString())
         ProjectsApi(currentUser).createProject(createdProject)
 
         createdBuild = Build(
-            randomName(),
-            randomName(),
+            randomString(),
+            randomString(),
             createdProject,
-            Steps(listOf(Step(randomAlphabetic(10), SIMPLE_RUNNER.propertyName,
+            Steps(listOf(Step(randomString(), SIMPLE_RUNNER.propertyName,
                 Properties(listOf(
                     Property(SCRIPT_CONTENT.propertyName, "echo test"),
                     Property(STEP_MODE.propertyName, "default"),

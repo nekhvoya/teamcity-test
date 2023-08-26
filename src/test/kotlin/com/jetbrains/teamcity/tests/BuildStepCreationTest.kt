@@ -8,7 +8,7 @@ import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.BuildStep
 import com.jetbrains.teamcity.data.CommandLineStep
 import com.jetbrains.teamcity.data.Project
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
@@ -19,10 +19,10 @@ class BuildStepCreationTest: BaseTest() {
 
     @BeforeMethod
     fun createNewProject() {
-        createdProject = Project(randomAlphabetic(10), randomAlphabetic(10))
+        createdProject = Project(randomString(), randomString())
         ProjectsApi(currentUser).createProject(createdProject)
 
-        createdBuild = Build(randomAlphabetic(10), randomAlphabetic(10), createdProject)
+        createdBuild = Build(randomString(), randomString(), createdProject)
         BuildApi(currentUser).createBuild(createdBuild)
     }
 
@@ -43,7 +43,7 @@ class BuildStepCreationTest: BaseTest() {
         editBuildRunnersPage.clickAddBuildStep()
         newBuildStepPage.shouldBeOpened()
         newBuildStepPage.selectRunner(CMD)
-        val createdBuildStep = CommandLineStep(randomAlphabetic(10), "echo test")
+        val createdBuildStep = CommandLineStep(randomString(), "echo test")
         newBuildStepPage.commandLineForm.typeStepName(createdBuildStep.stepName)
         newBuildStepPage.commandLineForm.typeScript(createdBuildStep.customScript)
         newBuildStepPage.commandLineForm.save()

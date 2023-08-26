@@ -4,7 +4,7 @@ import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig
 import com.jetbrains.teamcity.data.Project
-import org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import com.jetbrains.teamcity.utils.randomString
 import org.openqa.selenium.By.id
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,7 +19,7 @@ class CreateProjectPage: BasePage(id("editProjectForm"), "Create Project Page", 
     }
 
     fun createRandomProject(): Project {
-        val name: String = randomAlphabetic(10)
+        val name: String = randomString()
         typeName(name)
         val id: String = idInput.value
             .takeIf { it != null }
