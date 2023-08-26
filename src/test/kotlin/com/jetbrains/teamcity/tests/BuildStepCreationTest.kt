@@ -31,6 +31,7 @@ class BuildStepCreationTest: BaseTest() {
     fun createBuildStep() {
         projectsPage.open()
         projectsPage.shouldBeOpened()
+        projectsPage.shouldListProject(createdProject)
         projectsPage.expandProject(createdProject)
         projectsPage.shouldListBuildForProject(createdProject, createdBuild)
         projectsPage.clickBuildFromProject(createdProject, createdBuild)

@@ -12,6 +12,7 @@ import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.Duration
 
 class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", EnvConfig.projectsUrl) {
     private val loggedInUserIcon: SelenideElement = `$`("[data-hint-container-id=header-user-menu] button")
@@ -23,6 +24,9 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     private val projectArrow = { projectContainer: SelenideElement -> projectContainer.find("[class*=Subproject__arrow]") }
     private val projectLink = { projectContainer: SelenideElement, projectName: String -> projectContainer.find("[href*=project][title=${projectName}]") }
     private val buildLink = { projectContainer: SelenideElement, buildName: String -> projectContainer.find("[href*=buildConfiguration][title=${buildName}]") }
+    private val buildContainer = { buildName: String ->`$`(xpath("//div[contains(@class, 'BuildsByBuildType__container') and contains(., '$buildName')]")) }
+    private val runButton = { buildContainer: SelenideElement -> `$`("[data-test=run-build]")}
+    private val successLabel = { buildContainer: SelenideElement -> `$`("[data-test-link-with-icon=finished_green]")}
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(ProjectsPage::class.java.simpleName)
@@ -53,6 +57,11 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
         projectArrow(projectContainer(project.name)).click()
     }
 
+    fun runBuild(build: Build) {
+        log.info("Clicking run button of build ${build.name}")
+        runButton(buildContainer(build.name)).click()
+    }
+
     fun isProjectExpanded(project: Project): Boolean {
         log.info("Checking if project $project is expanded")
         return projectDetailsButton(projectContainer(project.name)).getAttribute("aria-expanded").toBoolean()
@@ -71,5 +80,10 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     fun shouldListBuildForProject(project: Project, build: Build) {
         log.info("Checking if build ${build.name} is listed")
         projectContainer(project.name).find("[href*=buildConfiguration][title=${build.name}]").shouldBe(visible)
+    }
+
+    fun shouldListSuccessfulBuild(build: Build, timeout: Duration) {
+        log.info("Checking if build ${build.name} completed successfully")
+        successLabel(buildContainer(build.name)).shouldBe(visible, timeout)
     }
 }

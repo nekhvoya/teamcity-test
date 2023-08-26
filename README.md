@@ -60,3 +60,14 @@ Preconditions: User is logged in, test project is created, build is created in t
 | Enter step name                               | Step name is entered                                                                                     |
 | Enter simple test script                      | Script is entered                                                                                        |
 | Click 'Save'                                  | Edit Build Runner page is opened, build settings are saved, build step is displayed in the list of steps |                       
+
+5. Run build
+
+Preconditions: User is logged in, test project is created, build is created in test project, simple runner is configured as build step
+
+| Step                                          | Expected result                                    |
+|-----------------------------------------------|----------------------------------------------------|
+| Open TeamCity Projects page                   | Projects page is opened, test project is displayed |
+| Expand test project, click created build link | Created build is displayed                         |
+| Click 'Run' related to created build          | Run is started                                     |
+| Wait for run to complete and check its result | Run is completed successfully                      |
