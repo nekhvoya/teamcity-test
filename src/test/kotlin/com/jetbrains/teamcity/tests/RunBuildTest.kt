@@ -4,8 +4,8 @@ import com.jetbrains.teamcity.api.BuildApi
 import com.jetbrains.teamcity.api.ProjectsApi
 import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.data.*
-import com.jetbrains.teamcity.data.BuildType.SIMPLE_RUNNER
-import com.jetbrains.teamcity.data.StepProperty.*
+import com.jetbrains.teamcity.constants.BuildType.SIMPLE_RUNNER
+import com.jetbrains.teamcity.constants.StepProperty.*
 import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
@@ -27,7 +27,7 @@ class RunBuildTest: BaseTest() {
             createdProject,
             Steps(listOf(Step(randomString(), SIMPLE_RUNNER.propertyName,
                 Properties(listOf(
-                    Property(SCRIPT_CONTENT.propertyName, "echo test"),
+                    Property(SCRIPT_CONTENT.propertyName, "echo ${randomString()}"),
                     Property(STEP_MODE.propertyName, "default"),
                     Property(USE_CUSTOM_SCRIPT.propertyName, "true"),
                 )))))

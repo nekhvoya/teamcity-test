@@ -9,6 +9,7 @@ class EnvConfig {
         val editProjectUrl = "http://localhost:8111/admin/editProject.html"
         val editVcsRootUrl = "http://localhost:8111/admin/editVcsRoot.html"
         val editVcsSettingsUrl = "http://localhost:8111/admin/editBuildTypeVcsRoots.html"
+        val projectConfigurationsUrl = "http://localhost:8111/project/"
         val buildConfigurationsUrl = "http://localhost:8111/buildConfiguration/"
         val editBuildUrl = "http://localhost:8111/admin/editBuild.html"
         val editBuildRunnersUrl = "http://localhost:8111/admin/editBuildRunners.html"

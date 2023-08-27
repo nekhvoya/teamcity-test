@@ -2,20 +2,20 @@ package com.jetbrains.teamcity.ui
 
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig
+import com.jetbrains.teamcity.config.EnvConfig.Companion.baseUrl
 import com.jetbrains.teamcity.config.UserCredentials
 import org.openqa.selenium.By.className
 import org.openqa.selenium.By.id
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 
-class LoginPage: BasePage(id("loginPage"), "Login Page", EnvConfig.baseUrl) {
+class LoginPage: BasePage(id("loginPage"), "Login Page", baseUrl) {
     private val usernameInput: SelenideElement = `$`(id("username"))
     private val passwordInput: SelenideElement = `$`(id("password"))
     private val loginButton: SelenideElement = `$`(className("loginButton"))
 
     companion object {
-        val log: Logger = LoggerFactory.getLogger(LoginPage::class.java.simpleName)
+        val log: Logger = getLogger(LoginPage::class.java.simpleName)
     }
 
     fun loginAs(admin: UserCredentials) {

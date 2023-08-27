@@ -3,7 +3,6 @@ package com.jetbrains.teamcity.tests
 import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import org.testng.annotations.Test
 
-
 class LoginTest: BaseTest() {
 
     @Test

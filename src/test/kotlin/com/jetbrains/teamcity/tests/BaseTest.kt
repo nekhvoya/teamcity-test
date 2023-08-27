@@ -4,6 +4,7 @@ import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import com.codeborne.selenide.testng.BrowserPerTest
 import com.jetbrains.teamcity.api.AuthenticationApi
 import com.jetbrains.teamcity.config.UserCredentials
+import com.jetbrains.teamcity.constants.Cookie.SESSION
 import com.jetbrains.teamcity.ui.*
 import org.openqa.selenium.Cookie
 import org.slf4j.Logger
@@ -23,6 +24,7 @@ abstract class BaseTest {
     protected val editProjectPage = EditProjectPage()
     protected val editVcsRootPage = EditVcsRootPage()
     protected val editVcsSettingsPage = EditVcsSettingsPage()
+    protected val projectConfigurationPage = ProjectConfigurationPage()
     protected val buildConfigurationPage = BuildConfigurationPage()
     protected val editBuildPage = EditBuildPage()
     protected val editBuildRunnersPage = EditBuildRunnersPage()
@@ -41,7 +43,7 @@ abstract class BaseTest {
         }
         currentUser = currentUserType.user
         loginPage.open()
-        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie("TCSESSIONID")
-        getWebDriver().manage().addCookie(Cookie("TCSESSIONID", sessionCookie))
+        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie(SESSION.cookieName)
+        getWebDriver().manage().addCookie(Cookie(SESSION.cookieName, sessionCookie))
     }
 }

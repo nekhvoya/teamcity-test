@@ -4,32 +4,41 @@ import com.codeborne.selenide.Condition.attribute
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig
+import com.jetbrains.teamcity.config.EnvConfig.Companion.projectsUrl
 import com.jetbrains.teamcity.config.UserCredentials
+import com.jetbrains.teamcity.constants.ElementProperty.ARIA_EXPANDED
+import com.jetbrains.teamcity.constants.ElementProperty.TITLE
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.Project
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 import java.time.Duration
 
-class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", EnvConfig.projectsUrl) {
+class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", projectsUrl) {
     private val loggedInUserIcon: SelenideElement = `$`("[data-hint-container-id=header-user-menu] button")
-    private val projectContainer = { projectName: String ->`$`(xpath("//div[contains(@class, 'Subproject__container') and contains(., '$projectName')]")) }
-    private val newConfigurationButton: SelenideElement = `$`(xpath("//span[contains(text(), 'New Configuration')]"))
-    private val newProjectButton: SelenideElement = `$`("[data-hint-container-id=project-create-entity]")
-    private val addBuildConfigurationButton = { projectContainer: SelenideElement -> projectContainer.find("[class*=addBuildConfiguration]") }
-    private val projectDetailsButton = { projectContainer: SelenideElement -> projectContainer.find("[class*=Details__button]") }
-    private val projectArrow = { projectContainer: SelenideElement -> projectContainer.find("[class*=Subproject__arrow]") }
-    private val projectLink = { projectContainer: SelenideElement, projectName: String -> projectContainer.find("[href*=project][title=${projectName}]") }
-    private val buildLink = { projectContainer: SelenideElement, buildName: String -> projectContainer.find("[href*=buildConfiguration][title=${buildName}]") }
-    private val buildContainer = { buildName: String ->`$`(xpath("//div[contains(@class, 'BuildsByBuildType__container') and contains(., '$buildName')]")) }
-    private val runButton = { buildContainer: SelenideElement -> `$`("[data-test=run-build]")}
-    private val successLabel = { buildContainer: SelenideElement -> `$`("[data-test-link-with-icon=finished_green]")}
+    private val projectContainer = { projectName: String ->
+        `$`(xpath("//div[contains(@class, 'Subproject__container') and contains(., '$projectName')]")) }
+    private val newProjectButton: SelenideElement =
+        `$`("[data-hint-container-id=project-create-entity]")
+    private val projectDetailsButton = { projectContainer: SelenideElement ->
+        projectContainer.find("[class*=Details__button]") }
+    private val projectArrow = { projectContainer: SelenideElement ->
+        projectContainer.find("[class*=Subproject__arrow]") }
+    private val projectLink = { projectContainer: SelenideElement ->
+        projectContainer.find("[href*=project]") }
+    private val buildLink = { projectContainer: SelenideElement, buildName: String ->
+        projectContainer.find("[href*=buildConfiguration][title=${buildName}]") }
+    private val buildContainer = { buildName: String ->
+        `$`(xpath("//div[contains(@class, 'BuildsByBuildType__container') and contains(., '$buildName')]")) }
+    private val runButton = { buildContainer: SelenideElement ->
+        `$`("[data-test=run-build]")}
+    private val successLabel = { buildContainer: SelenideElement ->
+        `$`("[data-test-link-with-icon=finished_green]")}
 
     companion object {
-        val log: Logger = LoggerFactory.getLogger(ProjectsPage::class.java.simpleName)
+        val log: Logger = getLogger(ProjectsPage::class.java.simpleName)
     }
 
     fun createNewProject() {
@@ -37,15 +46,14 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
         newProjectButton.click()
     }
 
+    fun clickProject(project: Project) {
+        log.info("Clicking build link ${project.name}")
+        projectLink(projectContainer(project.name)).click()
+    }
+
     fun clickBuildFromProject(project: Project, build: Build) {
         log.info("Clicking build link ${build.name}")
         buildLink(projectContainer(project.name), build.name).click()
-    }
-
-    fun addBuildConfiguration(project: Project) {
-        log.info("Clicking Add Build Configuration button of project ${project.name}")
-        addBuildConfigurationButton(projectContainer(project.name)).click()
-        newConfigurationButton.click()
     }
 
     fun expandProject(project: Project) {
@@ -64,17 +72,17 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
 
     fun isProjectExpanded(project: Project): Boolean {
         log.info("Checking if project $project is expanded")
-        return projectDetailsButton(projectContainer(project.name)).getAttribute("aria-expanded").toBoolean()
+        return projectDetailsButton(projectContainer(project.name)).getAttribute(ARIA_EXPANDED.propertyName).toBoolean()
     }
 
     fun shouldHaveLoggedInUser(user: UserCredentials) {
         log.info("Checking if user ${user.username} is logged in")
-        loggedInUserIcon.shouldHave(attribute("title", user.username))
+        loggedInUserIcon.shouldHave(attribute(TITLE.propertyName, user.username))
     }
 
     fun shouldListProject(project: Project) {
         log.info("Checking if project ${project.name} is listed")
-        projectLink(projectContainer(project.name), project.name).shouldBe(visible)
+        projectLink(projectContainer(project.name)).shouldHave(attribute(TITLE.propertyName, project.name))
     }
 
     fun shouldListBuildForProject(project: Project, build: Build) {

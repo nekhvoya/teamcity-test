@@ -4,6 +4,7 @@ import com.jetbrains.teamcity.config.EnvConfig
 import com.jetbrains.teamcity.config.UserCredentials
 import com.jetbrains.teamcity.data.Project
 import io.restassured.builder.ResponseSpecBuilder
+import org.apache.http.HttpStatus.SC_NO_CONTENT
 import org.hamcrest.Matchers.equalTo
 
 
@@ -20,7 +21,7 @@ class ProjectsApi(user: UserCredentials): BaseApi(EnvConfig.projectsEndpoint, us
             .delete("id:$projectId")
             .then().spec(
                 ResponseSpecBuilder()
-                    .expectStatusCode(equalTo(204))
+                    .expectStatusCode(equalTo(SC_NO_CONTENT))
                     .build()
             )
     }

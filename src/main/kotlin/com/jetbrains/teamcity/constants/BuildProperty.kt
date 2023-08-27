@@ -1,4 +1,4 @@
-package com.jetbrains.teamcity.data
+package com.jetbrains.teamcity.constants
 
 
 enum class BuildType(val propertyName: String) {

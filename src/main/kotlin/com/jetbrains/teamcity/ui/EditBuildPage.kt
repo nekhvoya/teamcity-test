@@ -1,16 +1,16 @@
 package com.jetbrains.teamcity.ui
 
-import com.jetbrains.teamcity.config.EnvConfig
+import com.jetbrains.teamcity.config.EnvConfig.Companion.editBuildUrl
 import com.jetbrains.teamcity.ui.components.AdminSidebarComponent
 import org.openqa.selenium.By.id
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 
-class EditBuildPage: BasePage(id("buildTypeSettingsContainerInner"), "Edit Build Page", EnvConfig.editBuildUrl) {
+class EditBuildPage: BasePage(id("buildTypeSettingsContainerInner"), "Edit Build Page", editBuildUrl) {
 
     val adminSidebar = AdminSidebarComponent()
 
     companion object {
-        val log: Logger = LoggerFactory.getLogger(EditBuildPage::class.java.simpleName)
+        val log: Logger = getLogger(EditBuildPage::class.java.simpleName)
     }
 }

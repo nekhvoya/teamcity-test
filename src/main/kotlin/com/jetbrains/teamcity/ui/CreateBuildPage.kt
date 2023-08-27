@@ -2,21 +2,21 @@ package com.jetbrains.teamcity.ui
 
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig
+import com.jetbrains.teamcity.config.EnvConfig.Companion.createBuildUrl
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.utils.randomString
 import org.openqa.selenium.By.id
 import org.openqa.selenium.By.name
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.LoggerFactory.getLogger
 
-class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", EnvConfig.createBuildUrl) {
+class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", createBuildUrl) {
     private val nameInput: SelenideElement = Selenide.`$`(id("buildTypeName"))
     private val idInput: SelenideElement = Selenide.`$`(id("buildTypeExternalId"))
     private val createButton: SelenideElement = Selenide.`$`(name("createBuildType"))
 
     companion object {
-        val log: Logger = LoggerFactory.getLogger(CreateBuildPage::class.java.simpleName)
+        val log: Logger = getLogger(CreateBuildPage::class.java.simpleName)
     }
 
     fun createRandomBuild(): Build {
@@ -30,12 +30,12 @@ class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", 
     }
 
     fun typeName(name: String) {
-        CreateProjectPage.log.info("Typing $name in Name input on $pageName")
+        log.info("Typing $name in Name input on $pageName")
         nameInput.type(name)
     }
 
     fun clickCreateButton() {
-        CreateProjectPage.log.info("Clicking Create button on $pageName")
+        log.info("Clicking Create button on $pageName")
         createButton.click()
     }
 }

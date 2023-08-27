@@ -7,17 +7,17 @@ This project implements automation of the testing process for the TeamCity serve
 * IDE (IntelliJ IDEA)
 * Gradle 8.3
 * TeamCity server running locally on port 8111 (version 2023.05.2)
-* Team city has a build agent configured running locally (a Win10 machine)
-* TeamCity has a user account created with credentials admin/admin
+* TeamCity has a build agent configured running locally (a Win10 machine)
+* TeamCity has an admin account with credentials admin/admin
 
 ### How to run tests
-Tests can be run from the IDE just by selecting a test to run and clicking the Run button or by running the following command: `./gradlew test`
+Tests can be run from the IDE by selecting a test and clicking the Run button or by running the following command: `./gradlew test`
 
 ### Reporting
 
 When the test run is finished a test report will be generated.
 The report can be found in `/build/reports/tests/test/index.html`.
-If a test fails a screenshot will be
+If a test fails a screenshot will be made. Screenshots can be found in the following directory `/build/reports/tests/`.
 
 ### Test cases for automation
 
@@ -33,21 +33,21 @@ If a test fails a screenshot will be
 2. Create project manually (Automated)
 
 Preconditions: 
-* an admin user is logged in
+* admin user is logged in
 
-| Step                                                     | Expected result                                    |
-|----------------------------------------------------------|----------------------------------------------------|
-| Open TeamCity Projects page                              | Projects page is opened                            |
-| Click 'Create New Project' button at the top left corner | Create Project page is opened                      |
-| Enter project name in Name input                         | Project name is entered                            |
-| Click 'Create'                                           | Project is created, Edit project page is opened    |
-| Open Projects page                                       | Created project is visible in the list of projects |
+| Step                                                | Expected result                                    |
+|-----------------------------------------------------|----------------------------------------------------|
+| Open TeamCity Projects page                         | Projects page is opened                            |
+| Click 'Create New Project' button (top left corner) | Create Project page is opened                      |
+| Enter project name in Name input                    | Project name is entered                            |
+| Click 'Create'                                      | Project is created, Edit project page is opened    |
+| Open Projects page                                  | Created project is visible in the list of projects |
 
 3. Create build manually (Automated)
 
 Preconditions: 
-* an admin user is logged in
-* a test project is created
+* admin user is logged in
+* test project is created
 
 | Step                                               | Expected result                                           |
 |----------------------------------------------------|-----------------------------------------------------------|
@@ -61,9 +61,9 @@ Preconditions:
 4. Create build step (Automated)
 
 Preconditions: 
-* an admin user is logged in
-* a test project is created
-* a build is created in test project
+* admin user is logged in
+* test project is created
+* build is created in test project
 
 | Step                                          | Expected result                                                                                          |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------|
@@ -80,10 +80,10 @@ Preconditions:
 5. Run build (Automated)
 
 Preconditions: 
-* an admin user is logged in
-* a test project is created
-* a build is created in test project
-* a build step is configured (e.g., simple command line runner)
+* admin user is logged in
+* test project is created
+* build is created in test project
+* build step is configured (e.g., simple command line runner)
 
 | Step                                          | Expected result                                    |
 |-----------------------------------------------|----------------------------------------------------|
@@ -94,10 +94,10 @@ Preconditions:
 
 6. Configure VCS
 
-* an admin user is logged in
-* a test project is created
-* a build is created in test project
-* there is a local test Git repository
+* admin user is logged in
+* test project is created
+* build is created in test project
+* there is local test Git repository
 
 | Step                                          | Expected result                                                      |
 |-----------------------------------------------|----------------------------------------------------------------------|
@@ -117,12 +117,12 @@ Preconditions:
 7. Checkout from VCS
 
 Preconditions:
-* an admin user is logged in 
-* a test project is created
-* a build is created in test project
-* a VSC root is configured
+* admin user is logged in
+* test project is created
+* build is created in test project
+* VSC root is configured
 * the repository contains a PowerShell script (e.g., echo <randomString>) 
-* a build step is configured to run a ps script from the VCS
+* build step is configured to run ps script from the VCS
 
 | Step                                          | Expected result                                                |
 |-----------------------------------------------|----------------------------------------------------------------|
@@ -136,10 +136,10 @@ Preconditions:
 | Verify the build logs                         | The logs contain output of the test script from the repository |
 
 
-8. Create a New User Account
+8. Create New User Account
 
 Preconditions:
-* an admin user is logged in
+* admin user is logged in
 
 | Step                                     | Expected result                                              |
 |------------------------------------------|--------------------------------------------------------------|
@@ -152,10 +152,10 @@ Preconditions:
 | Enter password in Confirm Password input | Password is entered                                          |
 | Click 'Create User'                      | Users list is displayed, created user is present in the list |
 
-9. Log in as a newly created user
+9. Log in as newly created user
 
 Preconditions:
-* An additional non-admin account is created
+* additional non-admin account is created
 
 | Step                                         | Expected result                            |
 |----------------------------------------------|--------------------------------------------|
@@ -167,7 +167,7 @@ Preconditions:
 10. Create build agent
 
 Preconditions:
-* There is a docker instance up and running
+* Docker instance up and running
 * Pull the agent image: docker pull jetbrains/teamcity-agent
 * Start a linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
 
@@ -183,14 +183,14 @@ Preconditions:
 11. Run build on a newly created agent
 
 Preconditions:
-* There is a docker instance up and running
+* Docker instance up and running
 * Pull the agent image: docker pull jetbrains/teamcity-agent
 * Start a linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
-* The newly created build agent is enabled and authorized
-* an admin user is logged in
-* a test project is created
-* a build is created in test project
-* a build step is configured to run a linux command (e.g., simple command line runner)
+* Newly created build agent is enabled and authorized
+* admin user is logged in
+* test project is created
+* build is created in test project
+* build step is configured to run linux commands (e.g., simple command line runner)
 
 | Step                                          | Expected result                                    |
 |-----------------------------------------------|----------------------------------------------------|
