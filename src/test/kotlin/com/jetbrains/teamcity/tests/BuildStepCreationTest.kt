@@ -1,9 +1,8 @@
 package com.jetbrains.teamcity.tests
 
+import com.jetbrains.teamcity.Runner.Companion.CMD
 import com.jetbrains.teamcity.api.BuildApi
 import com.jetbrains.teamcity.api.ProjectsApi
-import com.jetbrains.teamcity.config.UserCredentials.ADMIN
-import com.jetbrains.teamcity.constants.Runner.CMD
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.CommandLineStep
 import com.jetbrains.teamcity.data.Project
@@ -25,7 +24,7 @@ class BuildStepCreationTest: BaseTest() {
         BuildApi(currentUser).createBuild(createdBuild)
     }
 
-    @User(ADMIN)
+    @UserAccount("ADMIN")
     @Test
     fun createBuildStep() {
         projectsPage.open()

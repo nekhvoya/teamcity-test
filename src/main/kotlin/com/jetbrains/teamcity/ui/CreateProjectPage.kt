@@ -2,14 +2,14 @@ package com.jetbrains.teamcity.ui
 
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig.Companion.createProjectUrl
+import com.jetbrains.teamcity.config.EnvConfig.Companion.CREATE_PROJECT_URL
 import com.jetbrains.teamcity.data.Project
 import com.jetbrains.teamcity.utils.randomString
 import org.openqa.selenium.By.id
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class CreateProjectPage: BasePage(id("editProjectForm"), "Create Project Page", createProjectUrl) {
+class CreateProjectPage: BasePage(id("editProjectForm"), "Create Project Page", CREATE_PROJECT_URL) {
     private val nameInput: SelenideElement = `$`(id("name"))
     private val idInput: SelenideElement = `$`(id("externalId"))
     private val createButton: SelenideElement = `$`(id("createProject"))

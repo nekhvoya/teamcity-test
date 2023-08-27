@@ -2,9 +2,10 @@ package com.jetbrains.teamcity.tests
 
 import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import com.codeborne.selenide.testng.BrowserPerTest
+import com.jetbrains.teamcity.Cookie.Companion.SESSION
 import com.jetbrains.teamcity.api.AuthenticationApi
-import com.jetbrains.teamcity.config.UserCredentials
-import com.jetbrains.teamcity.constants.Cookie.SESSION
+import com.jetbrains.teamcity.config.UserAccounts.Companion.users
+import com.jetbrains.teamcity.data.User
 import com.jetbrains.teamcity.ui.*
 import org.openqa.selenium.Cookie
 import org.slf4j.Logger
@@ -15,7 +16,7 @@ import java.lang.reflect.Method
 
 @Listeners(BrowserPerTest::class)
 abstract class BaseTest {
-    protected lateinit var currentUser: UserCredentials
+    protected lateinit var currentUser: User
 
     protected val loginPage = LoginPage()
     protected val projectsPage = ProjectsPage()
@@ -36,14 +37,14 @@ abstract class BaseTest {
 
     @BeforeMethod
     fun setUpUser(method: Method) {
-        val currentUserType: User? = method.getAnnotation(User::class.java)
+        val currentUserType: UserAccount? = method.getAnnotation(UserAccount::class.java)
         if (currentUserType == null) {
             log.warn("Test wasn't annotated with user to login with, login steps should be performed in the test")
             return
         }
-        currentUser = currentUserType.user
+        currentUser = users.getValue(currentUserType.user)
         loginPage.open()
-        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie(SESSION.cookieName)
-        getWebDriver().manage().addCookie(Cookie(SESSION.cookieName, sessionCookie))
+        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie(SESSION)
+        getWebDriver().manage().addCookie(Cookie(SESSION, sessionCookie))
     }
 }

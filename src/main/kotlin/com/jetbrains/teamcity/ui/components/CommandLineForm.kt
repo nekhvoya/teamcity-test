@@ -2,7 +2,6 @@ package com.jetbrains.teamcity.ui.components
 
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.constants.ElementProperty.STYLE
 import com.jetbrains.teamcity.utils.setAttribute
 import org.openqa.selenium.By.cssSelector
 import org.slf4j.Logger
@@ -17,7 +16,7 @@ class CommandLineForm: BaseBuildStepForm(cssSelector("input[value=simpleRunner]"
 
     fun typeScript(script: String) {
         log.info("Typing script $script")
-        setAttribute(scriptInput.parent(), STYLE.propertyName, "none")
+        setAttribute(scriptInput.parent(), "style", "none")
         scriptInput.type(script)
     }
 }

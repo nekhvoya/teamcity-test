@@ -2,7 +2,7 @@ package com.jetbrains.teamcity.ui
 
 import com.codeborne.selenide.Selenide
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig.Companion.createBuildUrl
+import com.jetbrains.teamcity.config.EnvConfig.Companion.CREATE_BUILD_URL
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.utils.randomString
 import org.openqa.selenium.By.id
@@ -10,7 +10,7 @@ import org.openqa.selenium.By.name
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", createBuildUrl) {
+class CreateBuildPage: BasePage(id("createBuildTypeForm"), "Create Build Page", CREATE_BUILD_URL) {
     private val nameInput: SelenideElement = Selenide.`$`(id("buildTypeName"))
     private val idInput: SelenideElement = Selenide.`$`(id("buildTypeExternalId"))
     private val createButton: SelenideElement = Selenide.`$`(name("createBuildType"))

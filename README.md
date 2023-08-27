@@ -11,13 +11,12 @@ This project implements automation of the testing process for the TeamCity serve
 * TeamCity has an admin account with credentials admin/admin
 
 ### How to run tests
-Tests can be run from the IDE by selecting a test and clicking the Run button or by running the following command: `./gradlew test`
+Tests can be run from the IDE by selecting a test and clicking the Run button or by running the following command: `./gradlew test`.
 
 ### Reporting
-
 When the test run is finished a test report will be generated.
 The report can be found in `/build/reports/tests/test/index.html`.
-If a test fails a screenshot will be made. Screenshots can be found in the following directory `/build/reports/tests/`.
+If a test fails a screenshot will be made. Screenshots can be found in the following directory: `/build/reports/tests/`.
 
 ### Test cases for automation
 
@@ -35,13 +34,13 @@ If a test fails a screenshot will be made. Screenshots can be found in the follo
 Preconditions: 
 * admin user is logged in
 
-| Step                                                | Expected result                                    |
-|-----------------------------------------------------|----------------------------------------------------|
-| Open TeamCity Projects page                         | Projects page is opened                            |
-| Click 'Create New Project' button (top left corner) | Create Project page is opened                      |
-| Enter project name in Name input                    | Project name is entered                            |
-| Click 'Create'                                      | Project is created, Edit project page is opened    |
-| Open Projects page                                  | Created project is visible in the list of projects |
+| Step                                                 | Expected result                                    |
+|------------------------------------------------------|----------------------------------------------------|
+| Open TeamCity Projects page                          | Projects page is opened                            |
+| Click 'Create New Project' button (top right corner) | Create Project page is opened                      |
+| Enter project name in Name input                     | Project name is entered                            |
+| Click 'Create'                                       | Project is created, Edit project page is opened    |
+| Open Projects page                                   | Created project is visible in the list of projects |
 
 3. Create build manually (Automated)
 
@@ -49,14 +48,16 @@ Preconditions:
 * admin user is logged in
 * test project is created
 
-| Step                                               | Expected result                                           |
-|----------------------------------------------------|-----------------------------------------------------------|
-| Open TeamCity Projects page                        | Projects page is opened, test project is listed           |
-| Find test project, click '+' > 'New Configuration' | Create Build page is opened                               |
-| Enter build name in Name input                     | Build name is entered                                     |
-| Click 'Create'                                     | Edit VCS Root page is opened                              |
-| Open Projects page                                 | Created project is visible in the list of projects        |
-| Expand create project                              | Created build is visible under expanded project           |
+| Step                              | Expected result                                    |
+|-----------------------------------|----------------------------------------------------|
+| Open TeamCity Projects page       | Projects page is opened, test project is listed    |
+| Click test project link           | Project Configuration page is opened               |
+| Click 'Edit Project'              | Edit Project page is opened                        |
+| Click 'Create build configuration | Create Build page is opened                        |
+| Enter build name in Name input    | Build name is entered                              |
+| Click 'Create'                    | Edit VCS Root page is opened                       |
+| Open Projects page                | Created project is visible in the list of projects |
+| Expand test project               | Created build is visible under expanded project    |
 
 4. Create build step (Automated)
 
@@ -124,16 +125,16 @@ Preconditions:
 * the repository contains a PowerShell script (e.g., echo <randomString>) 
 * build step is configured to run ps script from the VCS
 
-| Step                                          | Expected result                                                |
-|-----------------------------------------------|----------------------------------------------------------------|
-| Open TeamCity Projects page                   | Projects page is opened, test project is displayed             |
-| Expand test project                           | Created build is displayed                                     |
-| Click created build link                      | Build Configuration page is opened                             |
-| Click 'Run'                                   | Run is started                                                 |
-| Wait for run to complete and check its result | Run is completed successfully                                  |
-| Click the run number                          | Details of the selected run are displayed                      |
-| Click 'Build Log'                             | Build Log tab is opened                                        |
-| Verify the build logs                         | The logs contain output of the test script from the repository |
+| Step                                          | Expected result                                             |
+|-----------------------------------------------|-------------------------------------------------------------|
+| Open TeamCity Projects page                   | Projects page is opened, test project is displayed          |
+| Expand test project                           | Created build is displayed                                  |
+| Click created build link                      | Build Configuration page is opened                          |
+| Click 'Run'                                   | Run is started                                              |
+| Wait for run to complete and check its result | Run is completed successfully                               |
+| Click the run number                          | Details of the selected run are displayed                   |
+| Click 'Build Log'                             | Build Log tab is opened                                     |
+| Verify the build logs                         | The logs contain output of test script from test repository |
 
 
 8. Create New User Account
@@ -167,25 +168,25 @@ Preconditions:
 10. Create build agent
 
 Preconditions:
-* Docker instance up and running
-* Pull the agent image: docker pull jetbrains/teamcity-agent
-* Start a linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
+* Docker up and running
+* Pull agent image: docker pull jetbrains/teamcity-agent
+* Start linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
 
 | Step                                      | Expected result                                                   |
 |-------------------------------------------|-------------------------------------------------------------------|
 | Open TeamCity Projects page               | Projects page is opened, test project is displayed                |
 | Click 'Agents' in header                  | Agents Overview page is opened, 1 unauthorised agent is displayed | 
-| Expand Unauthorized list                  | The newly added agent is listed under Unauthorized category       |
+| Expand Unauthorized list                  | Newly added agent is listed under Unauthorized category           |
 | Click agent link                          | Agent Details page is opened                                      |
 | Click 'Authorize'                         | Authorize host popup appears                                      | 
-| Click 'Authorize' in Authorize host popup | Agent is displayed as Authorized, Connected and Enabled           |
+| Click 'Authorize' in Authorize host popup | Agent is displayed as authorized, connected and enabled           |
 
-11. Run build on a newly created agent
+11. Execute run on newly created agent
 
 Preconditions:
-* Docker instance up and running
-* Pull the agent image: docker pull jetbrains/teamcity-agent
-* Start a linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
+* Docker up and running
+* Pull agent image: docker pull jetbrains/teamcity-agent
+* Start linux container: docker run -e SERVER_URL="<url to TeamCity server>" -v <path to agent config folder>:/data/teamcity_agent/conf jetbrains/teamcity-agent
 * Newly created build agent is enabled and authorized
 * admin user is logged in
 * test project is created

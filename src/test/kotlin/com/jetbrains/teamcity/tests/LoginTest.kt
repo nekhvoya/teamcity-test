@@ -1,6 +1,6 @@
 package com.jetbrains.teamcity.tests
 
-import com.jetbrains.teamcity.config.UserCredentials.ADMIN
+import com.jetbrains.teamcity.config.UserAccounts.Companion.users
 import org.testng.annotations.Test
 
 class LoginTest: BaseTest() {
@@ -9,9 +9,9 @@ class LoginTest: BaseTest() {
     fun logIn() {
         loginPage.open()
         loginPage.shouldBeOpened()
-        loginPage.loginAs(ADMIN)
+        loginPage.loginAs(users.getValue("ADMIN"))
 
         projectsPage.shouldBeOpened()
-        projectsPage.shouldHaveLoggedInUser(ADMIN)
+        projectsPage.shouldHaveLoggedInUser(users.getValue("ADMIN"))
     }
 }

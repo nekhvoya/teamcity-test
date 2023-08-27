@@ -4,19 +4,17 @@ import com.codeborne.selenide.Condition.attribute
 import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
-import com.jetbrains.teamcity.config.EnvConfig.Companion.projectsUrl
-import com.jetbrains.teamcity.config.UserCredentials
-import com.jetbrains.teamcity.constants.ElementProperty.ARIA_EXPANDED
-import com.jetbrains.teamcity.constants.ElementProperty.TITLE
+import com.jetbrains.teamcity.config.EnvConfig.Companion.PROJECTS_URL
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.Project
+import com.jetbrains.teamcity.data.User
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import java.time.Duration
 
-class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", projectsUrl) {
+class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", PROJECTS_URL) {
     private val loggedInUserIcon: SelenideElement = `$`("[data-hint-container-id=header-user-menu] button")
     private val projectContainer = { projectName: String ->
         `$`(xpath("//div[contains(@class, 'Subproject__container') and contains(., '$projectName')]")) }
@@ -72,17 +70,17 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
 
     fun isProjectExpanded(project: Project): Boolean {
         log.info("Checking if project $project is expanded")
-        return projectDetailsButton(projectContainer(project.name)).getAttribute(ARIA_EXPANDED.propertyName).toBoolean()
+        return projectDetailsButton(projectContainer(project.name)).getAttribute("aria-expanded").toBoolean()
     }
 
-    fun shouldHaveLoggedInUser(user: UserCredentials) {
+    fun shouldHaveLoggedInUser(user: User) {
         log.info("Checking if user ${user.username} is logged in")
-        loggedInUserIcon.shouldHave(attribute(TITLE.propertyName, user.username))
+        loggedInUserIcon.shouldHave(attribute("title", user.username))
     }
 
     fun shouldListProject(project: Project) {
         log.info("Checking if project ${project.name} is listed")
-        projectLink(projectContainer(project.name)).shouldHave(attribute(TITLE.propertyName, project.name))
+        projectLink(projectContainer(project.name)).shouldHave(attribute("title", project.name))
     }
 
     fun shouldListBuildForProject(project: Project, build: Build) {

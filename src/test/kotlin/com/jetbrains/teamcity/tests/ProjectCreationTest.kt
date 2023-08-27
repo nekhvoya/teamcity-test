@@ -1,7 +1,6 @@
 package com.jetbrains.teamcity.tests
 
 import com.jetbrains.teamcity.api.ProjectsApi
-import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.data.Project
 import org.testng.annotations.AfterTest
 import org.testng.annotations.Test
@@ -9,7 +8,7 @@ import org.testng.annotations.Test
 class ProjectCreationTest: BaseTest() {
     private lateinit var createdProject: Project
 
-    @User(ADMIN)
+    @UserAccount("ADMIN")
     @Test
     fun createNewProjectManually() {
         projectsPage.open()

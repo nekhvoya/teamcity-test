@@ -1,7 +1,6 @@
 package com.jetbrains.teamcity.tests
 
 import com.jetbrains.teamcity.api.ProjectsApi
-import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.Project
 import com.jetbrains.teamcity.utils.randomString
@@ -18,7 +17,7 @@ class BuildCreationTest: BaseTest() {
         ProjectsApi(currentUser).createProject(createdProject)
     }
 
-    @User(ADMIN)
+    @UserAccount("ADMIN")
     @Test
     fun createBuildManually() {
         projectsPage.open()

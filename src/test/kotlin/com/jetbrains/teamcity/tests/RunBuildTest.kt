@@ -2,10 +2,11 @@ package com.jetbrains.teamcity.tests
 
 import com.jetbrains.teamcity.api.BuildApi
 import com.jetbrains.teamcity.api.ProjectsApi
-import com.jetbrains.teamcity.config.UserCredentials.ADMIN
+import com.jetbrains.teamcity.BuildType.Companion.SIMPLE_RUNNER
+import com.jetbrains.teamcity.StepProperty.Companion.SCRIPT_CONTENT
+import com.jetbrains.teamcity.StepProperty.Companion.STEP_MODE
+import com.jetbrains.teamcity.StepProperty.Companion.USE_CUSTOM_SCRIPT
 import com.jetbrains.teamcity.data.*
-import com.jetbrains.teamcity.constants.BuildType.SIMPLE_RUNNER
-import com.jetbrains.teamcity.constants.StepProperty.*
 import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.BeforeMethod
@@ -25,17 +26,17 @@ class RunBuildTest: BaseTest() {
             randomString(),
             randomString(),
             createdProject,
-            Steps(listOf(Step(randomString(), SIMPLE_RUNNER.propertyName,
+            Steps(listOf(Step(randomString(), SIMPLE_RUNNER,
                 Properties(listOf(
-                    Property(SCRIPT_CONTENT.propertyName, "echo ${randomString()}"),
-                    Property(STEP_MODE.propertyName, "default"),
-                    Property(USE_CUSTOM_SCRIPT.propertyName, "true"),
+                    Property(SCRIPT_CONTENT, "echo ${randomString()}"),
+                    Property(STEP_MODE, "default"),
+                    Property(USE_CUSTOM_SCRIPT, "true"),
                 )))))
         )
         BuildApi(currentUser).createBuild(createdBuild)
     }
 
-    @User(ADMIN)
+    @UserAccount("ADMIN")
     @Test
     fun runBuild() {
         projectsPage.open()
