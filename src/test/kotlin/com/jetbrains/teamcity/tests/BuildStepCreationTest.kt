@@ -5,7 +5,6 @@ import com.jetbrains.teamcity.api.ProjectsApi
 import com.jetbrains.teamcity.config.UserCredentials.ADMIN
 import com.jetbrains.teamcity.constants.Runner.CMD
 import com.jetbrains.teamcity.data.Build
-import com.jetbrains.teamcity.data.BuildStep
 import com.jetbrains.teamcity.data.CommandLineStep
 import com.jetbrains.teamcity.data.Project
 import com.jetbrains.teamcity.utils.randomString
@@ -43,16 +42,13 @@ class BuildStepCreationTest: BaseTest() {
         editBuildRunnersPage.clickAddBuildStep()
         newBuildStepPage.shouldBeOpened()
         newBuildStepPage.selectRunner(CMD)
-        val createdBuildStep = CommandLineStep(randomString(), "echo test")
+        val createdBuildStep = CommandLineStep(randomString(), "echo ${randomString()}")
         newBuildStepPage.commandLineForm.typeStepName(createdBuildStep.stepName)
         newBuildStepPage.commandLineForm.typeScript(createdBuildStep.customScript)
         newBuildStepPage.commandLineForm.save()
         editBuildRunnersPage.shouldBeOpened()
         editBuildRunnersPage.shouldHaveSettingsUpdatedMessage()
-        val steps: List<BuildStep> = editBuildRunnersPage.getBuildSteps()
-        assert(
-            steps.any { it.name == createdBuildStep.stepName }
-        ) { "Created build step was not found in for project ${createdProject.name} and build ${createdBuild.name}" }
+        editBuildRunnersPage.shouldListBuildStep(createdBuildStep)
     }
 
     @AfterMethod(alwaysRun = true)

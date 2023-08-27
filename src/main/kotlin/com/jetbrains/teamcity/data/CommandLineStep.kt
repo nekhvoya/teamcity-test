@@ -1,6 +1,3 @@
 package com.jetbrains.teamcity.data
 
-data class CommandLineStep(
-    val stepName: String,
-    val customScript: String
-)
+class CommandLineStep(stepName: String, val customScript: String) : BaseStep(stepName)
