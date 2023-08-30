@@ -14,6 +14,8 @@ dependencies {
     implementation("com.codeborne:selenide:6.17.1")
     implementation("io.rest-assured:rest-assured:5.3.1")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.eclipse.jgit:org.eclipse.jgit:6.6.0.202305301015-r")
+    implementation("commons-io:commons-io:2.13.0")
     testImplementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
     testImplementation("org.testng:testng:7.8.0")
     testImplementation("com.codeborne:selenide-testng:6.17.2")

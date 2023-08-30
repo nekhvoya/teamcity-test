@@ -34,138 +34,52 @@ If a test fails a screenshot will be made. Screenshots can be found in the follo
 Preconditions: 
 * admin user is logged in
 
-| Step                                                 | Expected result                                    |
-|------------------------------------------------------|----------------------------------------------------|
-| Open TeamCity Projects page                          | Projects page is opened                            |
-| Click 'Create New Project' button (top right corner) | Create Project page is opened                      |
-| Enter project name in Name input                     | Project name is entered                            |
-| Click 'Create'                                       | Project is created, Edit project page is opened    |
-| Open Projects page                                   | Created project is visible in the list of projects |
-
-3. Create build manually (Automated)
-
-Preconditions: 
-* admin user is logged in
-* test project is created
-
-| Step                              | Expected result                                    |
-|-----------------------------------|----------------------------------------------------|
-| Open TeamCity Projects page       | Projects page is opened, test project is listed    |
-| Click test project link           | Project Configuration page is opened               |
-| Click 'Edit Project'              | Edit Project page is opened                        |
-| Click 'Create build configuration | Create Build page is opened                        |
-| Enter build name in Name input    | Build name is entered                              |
-| Click 'Create'                    | Edit VCS Root page is opened                       |
-| Open Projects page                | Created project is visible in the list of projects |
-| Expand test project               | Created build is visible under expanded project    |
-
-4. Create build step (Automated)
-
-Preconditions: 
-* admin user is logged in
-* test project is created
-* build is created in test project
-
-| Step                                          | Expected result                                                                                          |
-|-----------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| Open TeamCity Projects page                   | Projects page is opened, test project is listed                                                          |
-| Expand test project, click created build link | Build Configuration page is opened                                                                       |
-| Click 'Edit Configuration'                    | Edit Build page is opened                                                                                |
-| Select 'Build Steps' in side bar              | Edit Build Runner page is opened                                                                         |
-| Click '+ Add Build Step'                      | New Build Step page is opened                                                                            |
-| Select 'Command Line' in the list of runners  | New Build Step: Command Line form is opened                                                              |    
-| Enter step name                               | Step name is entered                                                                                     |
-| Enter simple test script                      | Script is entered                                                                                        |
-| Click 'Save'                                  | Edit Build Runner page is opened, build settings are saved, build step is displayed in the list of steps |                       
-
-5. Run build (Automated)
-
-Preconditions: 
-* admin user is logged in
-* test project is created
-* build is created in test project
-* build step is configured (e.g., simple command line runner)
-
-| Step                                          | Expected result                                    |
-|-----------------------------------------------|----------------------------------------------------|
-| Open TeamCity Projects page                   | Projects page is opened, test project is displayed |
-| Expand test project                           | Created build is displayed                         |
-| Click 'Run' related to created build          | Run is started                                     |
-| Wait for run to complete and check its result | Run is completed successfully                      |
-
-6. Configure VCS
-
-* admin user is logged in
-* test project is created
-* build is created in test project
-* there is local test Git repository
-
-| Step                                          | Expected result                                                      |
-|-----------------------------------------------|----------------------------------------------------------------------|
-| Open TeamCity Projects page                   | Projects page is opened, test project is displayed                   |
-| Expand test project                           | Created build is displayed                                           |
-| Click created build link                      | Build Configuration page is opened                                   |
-| Click 'Edit Configuration'                    | Edit Build page is opened                                            |
-| Select 'Version Control Settings' in side bar | VSC Roots page is opened                                             |
-| Click 'Attach VCS Root'                       | New VCS Root form is opened                                          |
-| Select 'Git' in 'Type of VCS' dropdown        | 'Git' option is selected                                             |
-| Enter 'VCS root name'                         | VCS root name is entered                                             |
-| Enter 'Fetch URL'                             | Repository url is entered                                            |
-| Enter 'Default branch'                        | Default branch is entered                                            |
-| Click 'Create'                                | VSC Roots page is opened, VCS root is created and listed on the page |
+| Step                                               | Expected result                                                 |
+|----------------------------------------------------|-----------------------------------------------------------------|
+| Open TeamCity Projects page                        | Projects page is opened                                         |
+| Click 'Create New Project' button (top right corner) | Create Project page is opened                                   |
+| Enter project name in Name input                   | Project name is entered                                         |
+| Click 'Create'                                     | Project is created, Edit project page is opened                 |
+| Click 'Create build configuration                  | Create Build page is opened                                     |
+| Enter build name in Name input                     | Build name is entered                                           |
+| Click 'Create'                                     | Edit VCS Root page is opened                                    |
+| Select 'Git' in 'Type of VCS' dropdown             | 'Git' option is selected                                        |
+| Enter 'VCS root name'                              | VCS root name is entered                                        |
+| Enter 'Fetch URL'                                  | Repository url is entered                                       |
+| Enter 'Default branch'                             | Default branch is entered                                       |
+| Click 'Create'                                     | VSC Roots page is opened, VCS root is created                   |
+| Select 'Build Steps' in side bar                   | Edit Build Runner page is opened                                |
+| Click '+ Add Build Step'                           | New Build Step page is opened                                   |
+| Select 'PowerShell' in the list of runners         | New Build Step: PowerShell form is opened                       |  
+| Enter path to script file in Script File input     | File path is entered                                            |
+| Click 'Create'                                     | Edit Build Runner page is opened, build step created            |
+| Click 'Run'                                        | Build Configuration page is opened, Build Overview is displayed |
+| Wait for run to complete                           | Run is executed successfully                                    |
+| Open Build Log tab                                 | Build Log tab is opened                                         |
+| Expand and verify step logs                        | Step logs contain output of the test script from VCS            |
 
 
-7. Checkout from VCS
-
-Preconditions:
-* admin user is logged in
-* test project is created
-* build is created in test project
-* VSC root is configured
-* the repository contains a PowerShell script (e.g., echo <randomString>) 
-* build step is configured to run ps script from the VCS
-
-| Step                                          | Expected result                                             |
-|-----------------------------------------------|-------------------------------------------------------------|
-| Open TeamCity Projects page                   | Projects page is opened, test project is displayed          |
-| Expand test project                           | Created build is displayed                                  |
-| Click created build link                      | Build Configuration page is opened                          |
-| Click 'Run'                                   | Run is started                                              |
-| Wait for run to complete and check its result | Run is completed successfully                               |
-| Click the run number                          | Details of the selected run are displayed                   |
-| Click 'Build Log'                             | Build Log tab is opened                                     |
-| Verify the build logs                         | The logs contain output of test script from test repository |
-
-
-8. Create New User Account
+3. Create New User Account and login as newly created user
 
 Preconditions:
 * admin user is logged in
 
-| Step                                     | Expected result                                              |
-|------------------------------------------|--------------------------------------------------------------|
-| Open TeamCity Projects page              | Projects page is opened, test project is displayed           |
-| Click 'Administration' in header         | Administration page is opened                                | 
-| Select 'Users' in the side bar           | Users list is displayed                                      |
-| Click 'Create User Account'              | Create User page is opened                                   |
-| Enter username in Username input         | Username is entered                                          |
-| Enter password in Password input         | Password is entered                                          |
-| Enter password in Confirm Password input | Password is entered                                          |
-| Click 'Create User'                      | Users list is displayed, created user is present in the list |
+| Step                                         | Expected result                                              |
+|----------------------------------------------|--------------------------------------------------------------|
+| Open TeamCity Projects page                  | Projects page is opened, test project is displayed           |
+| Click 'Administration' in header             | Administration page is opened                                | 
+| Select 'Users' in the side bar               | Users list is displayed                                      |
+| Click 'Create User Account'                  | Create User page is opened                                   |
+| Enter username in Username input             | Username is entered                                          |
+| Enter password in Password input             | Password is entered                                          |
+| Enter password in Confirm Password input     | Password is entered                                          |
+| Click 'Create User'                          | Users list is displayed, created user is present in the list |
+| Open TeamCity Login page                     | Login page is opened                                         |
+| Enter username of new user in Username input | Username is entered                                          |
+| Enter password of new user in Password input | Password is entered                                          |
+| Click 'Login'                                | Projects page is opened, User is logged in                   |
 
-9. Log in as newly created user
-
-Preconditions:
-* additional non-admin account is created
-
-| Step                                         | Expected result                            |
-|----------------------------------------------|--------------------------------------------|
-| Open TeamCity Login page                     | Login page is opened                       |
-| Enter username of new user in Username input | Username is entered                        |
-| Enter password of new user in Password input | Password is entered                        |
-| Click 'Login'                                | Projects page is opened, User is logged in |
-
-10. Create build agent
+4. Create build agent
 
 Preconditions:
 * Docker up and running
@@ -181,7 +95,7 @@ Preconditions:
 | Click 'Authorize'                         | Authorize host popup appears                                      | 
 | Click 'Authorize' in Authorize host popup | Agent is displayed as authorized, connected and enabled           |
 
-11. Execute run on newly created agent
+5. Execute run on newly created agent
 
 Preconditions:
 * Docker up and running

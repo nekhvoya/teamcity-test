@@ -23,5 +23,24 @@ class Cookie {
 class Runner {
     companion object {
         const val CMD = "Command Line"
+        const val POWER_SHELL = "PowerShell"
+    }
+}
+
+class VcsType {
+    companion object {
+        const val GIT = "Git"
+    }
+}
+
+class BuildOverviewTab {
+    companion object {
+        const val BUILD_LOG = "Build Log"
+    }
+}
+
+class BuildResult {
+    companion object {
+        const val SUCCESS = "Success"
     }
 }

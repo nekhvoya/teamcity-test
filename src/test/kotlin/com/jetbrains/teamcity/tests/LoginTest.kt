@@ -4,9 +4,8 @@ import com.jetbrains.teamcity.config.UserAccounts.Companion.users
 import org.testng.annotations.Test
 
 class LoginTest: BaseTest() {
-
     @Test
-    fun logIn() {
+    fun setUpNewBuild() {
         loginPage.open()
         loginPage.shouldBeOpened()
         loginPage.loginAs(users.getValue("ADMIN"))
