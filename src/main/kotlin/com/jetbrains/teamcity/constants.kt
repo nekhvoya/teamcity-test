@@ -44,3 +44,17 @@ class BuildResult {
         const val SUCCESS = "Success"
     }
 }
+
+class AdminSidebarItem {
+    companion object {
+        const val BUILD_STEPS = "editBuildRunners"
+        const val USERS = "users"
+    }
+}
+
+class PopUpMenuItem {
+    companion object {
+        const val LOG_OUT = "Logout"
+    }
+}
+

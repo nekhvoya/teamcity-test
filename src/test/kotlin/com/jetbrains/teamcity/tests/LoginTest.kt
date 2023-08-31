@@ -11,6 +11,6 @@ class LoginTest: BaseTest() {
         loginPage.loginAs(users.getValue("ADMIN"))
 
         projectsPage.shouldBeOpened()
-        projectsPage.shouldHaveLoggedInUser(users.getValue("ADMIN"))
+        projectsPage.header.shouldHaveLoggedInUser(users.getValue("ADMIN"))
     }
 }

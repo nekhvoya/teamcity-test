@@ -1,5 +1,6 @@
 package com.jetbrains.teamcity.tests
 
+import com.jetbrains.teamcity.AdminSidebarItem.Companion.BUILD_STEPS
 import com.jetbrains.teamcity.BuildOverviewTab.Companion.BUILD_LOG
 import com.jetbrains.teamcity.BuildResult.Companion.SUCCESS
 import com.jetbrains.teamcity.Runner.Companion.POWER_SHELL
@@ -10,17 +11,25 @@ import com.jetbrains.teamcity.data.VcsRoot
 import com.jetbrains.teamcity.utils.GitRepo
 import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterTest
+import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.nio.file.Path
 import java.time.Duration.ofSeconds
 
 class BuildConfigurationTest: BaseTest() {
     private lateinit var createdProject: Project
+    private lateinit var createdVcsRoot: VcsRoot
     private lateinit var git: GitRepo
+
+    @BeforeMethod
+    fun setUpGitRepo() {
+        git = GitRepo()
+        createdVcsRoot = VcsRoot(randomString(), git.url, git.branch)
+    }
 
     @UserAccount("ADMIN")
     @Test
-    fun createNewProjectManually() {
+    fun createFirstBuild() {
         // Create new project
         projectsPage.open()
         projectsPage.shouldBeOpened()
@@ -37,10 +46,9 @@ class BuildConfigurationTest: BaseTest() {
         editVcsRootPage.shouldBeOpened()
 
         // Configure VCS
-        git = GitRepo()
         val output: String = randomString()
         val scriptFile: Path = git.commitFile("test.ps1", "echo ${output}")
-        val createdVcsRoot = VcsRoot(randomString(), git.url, git.branch)
+
         editVcsRootPage.selectVcsType(VcsType.GIT)
         editVcsRootPage.setVcsName(createdVcsRoot.name)
         editVcsRootPage.setUrl(createdVcsRoot.url)
@@ -50,7 +58,7 @@ class BuildConfigurationTest: BaseTest() {
         editVcsSettingsPage.shouldHaveVcsRootUpdatedMessage()
 
         // Configure build step
-        editVcsSettingsPage.sideBar.selectBuildSteps()
+        editVcsSettingsPage.sideBar.selectMenuItem(BUILD_STEPS)
         editBuildRunnersPage.shouldBeOpened()
         editBuildRunnersPage.clickAddBuildStep()
         newBuildStepPage.shouldBeOpened()
@@ -68,7 +76,6 @@ class BuildConfigurationTest: BaseTest() {
         buildConfigurationPage.shouldBeOpened()
         buildConfigurationPage.buildOverview.shouldBeVisible()
         buildConfigurationPage.shouldDisplayResult(SUCCESS, ofSeconds(10))
-
         buildConfigurationPage.openOverviewTab(BUILD_LOG)
         buildConfigurationPage.buildLog.openStepLog(POWER_SHELL)
         buildConfigurationPage.buildLog.shouldDisplayOutPutLog(output)

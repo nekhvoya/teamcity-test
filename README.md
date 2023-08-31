@@ -74,7 +74,7 @@ Preconditions:
 | Enter password in Password input             | Password is entered                                          |
 | Enter password in Confirm Password input     | Password is entered                                          |
 | Click 'Create User'                          | Users list is displayed, created user is present in the list |
-| Open TeamCity Login page                     | Login page is opened                                         |
+| Log out                                      | Login page is opened                                         |
 | Enter username of new user in Username input | Username is entered                                          |
 | Enter password of new user in Password input | Password is entered                                          |
 | Click 'Login'                                | Projects page is opened, User is logged in                   |

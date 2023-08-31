@@ -7,14 +7,15 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
 class AdminSidebarComponent: BaseComponent(className("admin-sidebar"), "Admin Sidebar Component") {
-    private val buildStepsMenuItem: SelenideElement = `$`("[href*=editBuildRunners]")
+    private val sidebar: SelenideElement = `$`(componentLocator)
+    private val menuItem = { item: String -> sidebar.find("a[href*=$item]") }
 
     companion object {
         val log: Logger = getLogger(AdminSidebarComponent::class.java.simpleName)
     }
 
-    fun selectBuildSteps() {
-        log.info("Clicking Build Steps menu item")
-        buildStepsMenuItem.click()
+    fun selectMenuItem(item: String) {
+        log.info("Clicking menu item $item")
+        menuItem(item).click()
     }
 }

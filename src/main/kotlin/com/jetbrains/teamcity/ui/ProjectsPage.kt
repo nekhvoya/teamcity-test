@@ -7,7 +7,7 @@ import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig.Companion.PROJECTS_URL
 import com.jetbrains.teamcity.data.Build
 import com.jetbrains.teamcity.data.Project
-import com.jetbrains.teamcity.data.User
+import com.jetbrains.teamcity.ui.components.Header
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.By.xpath
 import org.slf4j.Logger
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory.getLogger
 import java.time.Duration
 
 class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Projects Page", PROJECTS_URL) {
-    private val loggedInUserIcon: SelenideElement = `$`("[data-hint-container-id=header-user-menu] button")
     private val projectContainer = { projectName: String ->
         `$`(xpath("//div[contains(@class, 'Subproject__container') and contains(., '$projectName')]")) }
     private val newProjectButton: SelenideElement =
@@ -34,6 +33,8 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
         `$`("[data-test=run-build]")}
     private val successLabel = { buildContainer: SelenideElement ->
         `$`("[data-test-link-with-icon=finished_green]")}
+
+    val header = Header()
 
     companion object {
         val log: Logger = getLogger(ProjectsPage::class.java.simpleName)
@@ -71,11 +72,6 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     fun isProjectExpanded(project: Project): Boolean {
         log.info("Checking if project $project is expanded")
         return projectDetailsButton(projectContainer(project.name)).getAttribute("aria-expanded").toBoolean()
-    }
-
-    fun shouldHaveLoggedInUser(user: User) {
-        log.info("Checking if user ${user.username} is logged in")
-        loggedInUserIcon.shouldHave(attribute("title", user.username))
     }
 
     fun shouldListProject(project: Project) {
