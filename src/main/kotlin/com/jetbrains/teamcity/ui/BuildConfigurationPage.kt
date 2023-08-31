@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory.getLogger
 import java.time.Duration
 
 class BuildConfigurationPage: BasePage(cssSelector("[class*=BuildPageHeader]"), "Build Configuration Page", BUILD_CONFIGURATION_URL) {
-    private val editConfigurationButton: SelenideElement = `$`(cssSelector("[href*=editBuild]"))
-    private val overviewTab = { title: String -> `$`(cssSelector("[data-tab-title='${title}']")) }
-    private val headerInfo: SelenideElement = `$`(cssSelector("[class*=headerInfo]"))
+    private val editConfigurationButton: SelenideElement = `$`("[href*=editBuild]")
+    private val overviewTab = { title: String -> `$`("[data-tab-title='${title}']") }
+    private val headerInfo: SelenideElement = `$`("[class*=headerInfo]")
 
     val buildOverview = BuildOverviewForm()
     val buildLog = BuildLogForm()

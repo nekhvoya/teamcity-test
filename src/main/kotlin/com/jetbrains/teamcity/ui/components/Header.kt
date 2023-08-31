@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory.getLogger
 class Header: BaseComponent(tagName("header"), "Header") {
     private val header: SelenideElement = `$`(componentLocator)
     private val projectsButton: SelenideElement = header.`$`("[title=Projects]")
+    private val agentsButton: SelenideElement = header.`$`("[title=Agents]")
     private val administrationButton: SelenideElement = header.`$`("[data-hint-container-id=header-administration-link]")
     private val loggedInUserIcon: SelenideElement = `$`("[data-hint-container-id=header-user-menu] button")
 
@@ -29,6 +30,11 @@ class Header: BaseComponent(tagName("header"), "Header") {
     fun clickAdministration() {
         log.info("Clicking Administration button in $componentName")
         administrationButton.click()
+    }
+
+    fun clickAgents() {
+        log.info("Clicking Agents button in $componentName")
+        agentsButton.click()
     }
 
     fun logout() {

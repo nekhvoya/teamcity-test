@@ -32,6 +32,9 @@ abstract class BaseTest {
     protected val newBuildStepPage = NewBuildStepPage()
     protected val administrationPage = AdministrationPage()
     protected val createUserPage = CreateUserPage()
+    protected val agentsOverviewPage = AgentsOverviewPage()
+    protected val agentDetailsPage = AgentDetailsPage()
+    protected val editRequirementsPage = EditRequirementsPage()
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(BaseTest::class.java.simpleName)

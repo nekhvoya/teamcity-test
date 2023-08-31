@@ -49,12 +49,26 @@ class AdminSidebarItem {
     companion object {
         const val BUILD_STEPS = "editBuildRunners"
         const val USERS = "users"
+        const val AGENT_REQUIREMENTS = "editRequirement"
     }
 }
 
 class PopUpMenuItem {
     companion object {
         const val LOG_OUT = "Logout"
+    }
+}
+
+class AgentStatus {
+    companion object {
+        const val CONNECTED = "Connected"
+        const val AUTHORIZED = "Authorized"
+    }
+}
+
+class AgentRequirement {
+    companion object {
+        const val TEAMCITY_AGENT_NAME = "teamcity.agent.name"
     }
 }
 

@@ -1,7 +1,6 @@
 package com.jetbrains.teamcity.ui
 
-import com.codeborne.selenide.Condition.attribute
-import com.codeborne.selenide.Condition.visible
+import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig.Companion.PROJECTS_URL
@@ -33,6 +32,8 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
         `$`("[data-test=run-build]")}
     private val successLabel = { buildContainer: SelenideElement ->
         `$`("[data-test-link-with-icon=finished_green]")}
+    private val agentLink = { buildContainer: SelenideElement ->
+        `$`("[class*=AgentLink]")}
 
     val header = Header()
 
@@ -87,5 +88,10 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     fun shouldListSuccessfulBuild(build: Build, timeout: Duration) {
         log.info("Checking if build ${build.name} completed successfully")
         successLabel(buildContainer(build.name)).shouldBe(visible, timeout)
+    }
+
+    fun shouldListAgentForBuild(build: Build, agentName: String) {
+        log.info("Checking id build ${build.name} was run on agent $agentName on $pageName")
+        agentLink(buildContainer(build.name)).shouldHave(text(agentName))
     }
 }

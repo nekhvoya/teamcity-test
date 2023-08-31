@@ -14,11 +14,15 @@ class EnvConfig {
         const val EDIT_BUILD_URL = "http://localhost:8111/admin/editBuild.html"
         const val EDIT_BUILD_RUNNER_URL = "http://localhost:8111/admin/editBuildRunners.html"
         const val EDIT_RUN_TYPE_URL = "http://localhost:8111/admin/editRunType.html"
+        const val EDIT_REQUIREMENTS_URL = "http://localhost:8111/admin/editRequirements.html"
         const val ADMINISTRATION_URL = "http://localhost:8111/admin/admin.html"
         const val CREATE_USER_URL = "http://localhost:8111/admin/createUser.html"
+        const val AGENTS_OVERVIEW_URL = "http://localhost:8111/agents/overview"
+        const val AGENTS_DETAILS_URL = "http://localhost:8111/agent/"
         const val PROJECTS_ENDPOINT = "http://localhost:8111/app/rest/projects/"
         const val BUILDS_ENDPOINT = "http://localhost:8111/app/rest/buildTypes"
         const val USERS_ENDPOINT = "http://localhost:8111/app/rest/users"
+        const val AGENTS_ENDPOINT = "http://localhost:8111/app/rest/agents"
         const val AUTH_ENDPOINT = "http://localhost:8111/authenticationTest.html"
     }
 }

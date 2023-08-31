@@ -16,7 +16,7 @@ import org.testng.annotations.Test
 import java.nio.file.Path
 import java.time.Duration.ofSeconds
 
-class BuildConfigurationTest: BaseTest() {
+    class ConfigureBuildTest: BaseTest() {
     private lateinit var createdProject: Project
     private lateinit var createdVcsRoot: VcsRoot
     private lateinit var git: GitRepo
@@ -68,6 +68,7 @@ class BuildConfigurationTest: BaseTest() {
         newBuildStepPage.powerShellForm.save()
         editBuildRunnersPage.shouldBeOpened()
         editBuildRunnersPage.shouldHaveSettingsUpdatedMessage()
+
 
         // Run build
         editBuildRunnersPage.breadcrumbs.runFirstBuild()

@@ -7,6 +7,7 @@ import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import org.openqa.selenium.By
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
+import java.time.Duration.ofSeconds
 
 abstract class BasePage(val pageLocator: By, val pageName: String, val pageUrl: String) {
     companion object {
@@ -21,7 +22,7 @@ abstract class BasePage(val pageLocator: By, val pageName: String, val pageUrl: 
 
     fun shouldBeOpened() {
         log.info("Checking if page $pageName is opened")
-        `$`(pageLocator).shouldBe(visible)
+        `$`(pageLocator).shouldBe(visible, ofSeconds(15))
     }
 
     fun refresh() {
