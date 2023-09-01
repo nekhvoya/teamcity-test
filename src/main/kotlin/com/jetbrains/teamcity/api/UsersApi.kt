@@ -4,7 +4,8 @@ import com.jetbrains.teamcity.config.EnvConfig
 import com.jetbrains.teamcity.data.User
 import io.restassured.builder.ResponseSpecBuilder
 import org.apache.http.HttpStatus.SC_NO_CONTENT
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.anyOf
+import org.hamcrest.Matchers.equalTo
 
 class UsersApi(user: User): BaseApi(EnvConfig.USERS_ENDPOINT, user) {
 
@@ -13,7 +14,11 @@ class UsersApi(user: User): BaseApi(EnvConfig.USERS_ENDPOINT, user) {
             .delete("username:$username")
             .then().spec(
                 ResponseSpecBuilder()
-                    .expectStatusCode(Matchers.equalTo(SC_NO_CONTENT))
+                    .expectStatusCode(
+                        anyOf(
+                            equalTo(SC_NO_CONTENT)
+                        )
+                    )
                     .build()
             )
     }

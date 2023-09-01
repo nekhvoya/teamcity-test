@@ -2,6 +2,7 @@ package com.jetbrains.teamcity.tests
 
 import com.codeborne.selenide.WebDriverRunner.getWebDriver
 import com.codeborne.selenide.testng.BrowserPerTest
+import com.jetbrains.teamcity.Cookie.Companion.REMEMBER_ME
 import com.jetbrains.teamcity.Cookie.Companion.SESSION
 import com.jetbrains.teamcity.api.AuthenticationApi
 import com.jetbrains.teamcity.config.UserAccounts.Companion.users
@@ -35,6 +36,7 @@ abstract class BaseTest {
     protected val agentsOverviewPage = AgentsOverviewPage()
     protected val agentDetailsPage = AgentDetailsPage()
     protected val editRequirementsPage = EditRequirementsPage()
+    protected val projectSetupPage = ProjectSetupPage()
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(BaseTest::class.java.simpleName)
@@ -49,7 +51,10 @@ abstract class BaseTest {
         }
         currentUser = users.getValue(currentUserType.user)
         loginPage.open()
-        val sessionCookie: String = AuthenticationApi(currentUser).getSessionCookie(SESSION)
+        val cookies: Map<String, String> = AuthenticationApi(currentUser).getSessionCookies(true)
+        val sessionCookie: String = cookies.getValue(SESSION)
+        val rememberMeCookie: String = cookies.getValue(REMEMBER_ME)
         getWebDriver().manage().addCookie(Cookie(SESSION, sessionCookie))
+        getWebDriver().manage().addCookie(Cookie(REMEMBER_ME, rememberMeCookie))
     }
 }

@@ -19,6 +19,7 @@ class EnvConfig {
         const val CREATE_USER_URL = "http://localhost:8111/admin/createUser.html"
         const val AGENTS_OVERVIEW_URL = "http://localhost:8111/agents/overview"
         const val AGENTS_DETAILS_URL = "http://localhost:8111/agent/"
+        const val PROJECT_SETUP_URL = "http://localhost:8111/admin/objectSetup.html"
         const val PROJECTS_ENDPOINT = "http://localhost:8111/app/rest/projects/"
         const val BUILDS_ENDPOINT = "http://localhost:8111/app/rest/buildTypes"
         const val USERS_ENDPOINT = "http://localhost:8111/app/rest/users"

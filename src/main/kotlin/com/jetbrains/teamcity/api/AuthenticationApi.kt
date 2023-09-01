@@ -8,12 +8,13 @@ import org.hamcrest.Matchers.equalTo
 
 class AuthenticationApi(user: User): BaseApi(EnvConfig.AUTH_ENDPOINT, user) {
 
-    fun getSessionCookie(cookie: String): String {
+    fun getSessionCookies(remember: Boolean = false): Map<String, String> {
         return requestSpecification
+            .param("remember", remember)
             .get().then().spec(
                 ResponseSpecBuilder()
                     .expectStatusCode(equalTo(SC_OK))
                     .build()
-            ).extract().cookie(cookie)
+            ).extract().cookies()
     }
 }

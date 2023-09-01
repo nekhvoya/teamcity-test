@@ -17,6 +17,7 @@ class StepProperty {
 class Cookie {
     companion object {
         const val SESSION = "TCSESSIONID"
+        const val REMEMBER_ME = "RememberMe"
     }
 }
 
@@ -24,6 +25,7 @@ class Runner {
     companion object {
         const val CMD = "Command Line"
         const val POWER_SHELL = "PowerShell"
+        const val MAVEN = "Maven"
     }
 }
 

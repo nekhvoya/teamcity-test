@@ -114,4 +114,24 @@ Preconditions:
 | Verify build agent used for run               | Run was executed on newly added agent                             |
 
 
-5. Configure build triggers
+5. Configure build from VCS
+
+Preconditions:
+* There is test public github repository with simple maven project and teamcity build config (settings.kts)
+* admin user is logged in
+
+| Step                                                 | Expected result                                                   |
+|------------------------------------------------------|-------------------------------------------------------------------|
+| Open TeamCity Projects page                          | Projects page is opened, test project is displayed                |
+| Click 'Create New Project' button (top right corner) | Create Project page is opened                                     |
+| Select 'From Repository URL' tab                     | Create From VCS form is displayed                                 |
+| Enter github repo URL                                | Repo URL is entered                                               |
+| Click 'Proceed'                                      | Create Project From URL form is opened                            |
+| Verify VCS settings radio buttons                    | 'Import settings from .teamcity/settings.kts' is selected         |
+| Enter unique project name                            | Project name is entered                                           |
+| Click 'Proceed'                                      | Edit Project page is opened, build configurations are displayed   |
+| Open build configuration                             | Edit Build page is opened                                         |
+| Click 'Run'                                          | Build Configuration page is opened, Build Overview is displayed   |
+| Wait for run to complete                             | Run is executed successfully                                      |
+| Open Build Log tab                                   | Build Log tab is opened                                           |
+| Expand and verify step logs                          | Step logs contain output of the test script from VCS              |

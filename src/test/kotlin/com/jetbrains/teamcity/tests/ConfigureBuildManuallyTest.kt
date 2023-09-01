@@ -10,13 +10,14 @@ import com.jetbrains.teamcity.data.Project
 import com.jetbrains.teamcity.data.VcsRoot
 import com.jetbrains.teamcity.utils.GitRepo
 import com.jetbrains.teamcity.utils.randomString
+import org.testng.annotations.AfterMethod
 import org.testng.annotations.AfterTest
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.nio.file.Path
 import java.time.Duration.ofSeconds
 
-    class ConfigureBuildTest: BaseTest() {
+class ConfigureBuildManuallyTest: BaseTest() {
     private lateinit var createdProject: Project
     private lateinit var createdVcsRoot: VcsRoot
     private lateinit var git: GitRepo
@@ -35,7 +36,9 @@ import java.time.Duration.ofSeconds
         projectsPage.shouldBeOpened()
         projectsPage.createNewProject()
         createProjectPage.shouldBeOpened()
-        createdProject = createProjectPage.createRandomProject()
+        createProjectPage.clickCreateManuallyButton()
+        createProjectPage.createProjectForm.shouldBeVisible()
+        createdProject = createProjectPage.createProjectForm.createRandomProject()
         editProjectPage.shouldBeOpened()
         editProjectPage.shouldHaveProjectCreatedMessage()
 
@@ -52,7 +55,7 @@ import java.time.Duration.ofSeconds
         editVcsRootPage.selectVcsType(VcsType.GIT)
         editVcsRootPage.setVcsName(createdVcsRoot.name)
         editVcsRootPage.setUrl(createdVcsRoot.url)
-        editVcsRootPage.setBranch(createdVcsRoot.branch)
+        editVcsRootPage.setBranch(createdVcsRoot.defaultBranch)
         editVcsRootPage.save()
         editVcsSettingsPage.shouldBeOpened()
         editVcsSettingsPage.shouldHaveVcsRootUpdatedMessage()
@@ -69,7 +72,6 @@ import java.time.Duration.ofSeconds
         editBuildRunnersPage.shouldBeOpened()
         editBuildRunnersPage.shouldHaveSettingsUpdatedMessage()
 
-
         // Run build
         editBuildRunnersPage.breadcrumbs.runFirstBuild()
 
@@ -82,13 +84,17 @@ import java.time.Duration.ofSeconds
         buildConfigurationPage.buildLog.shouldDisplayOutPutLog(output)
     }
 
-    @AfterTest(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     fun cleanUpProject() {
         if (this::createdProject.isInitialized) {
             ProjectsApi(currentUser).deleteProject(createdProject.id)
         }
-        if (this::git.isInitialized) {
-           git.tearDown()
-        }
     }
+
+   @AfterTest(alwaysRun = true)
+   fun tearDownGit() {
+       if (this::git.isInitialized) {
+           git.tearDown()
+       }
+   }
 }

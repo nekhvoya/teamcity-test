@@ -7,6 +7,8 @@ import io.restassured.http.ContentType.ANY
 import io.restassured.http.ContentType.TEXT
 import org.apache.http.HttpStatus
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.anyOf
+import org.hamcrest.Matchers.equalTo
 
 class AgentsApi(user: User): BaseApi(EnvConfig.AGENTS_ENDPOINT, user) {
     fun enableAgent(agentName: String, enable: Boolean) {
@@ -17,7 +19,7 @@ class AgentsApi(user: User): BaseApi(EnvConfig.AGENTS_ENDPOINT, user) {
             .put("name:$agentName/enabled")
             .then().spec(
                 ResponseSpecBuilder()
-                    .expectStatusCode(Matchers.equalTo(HttpStatus.SC_OK))
+                    .expectStatusCode(equalTo(HttpStatus.SC_OK))
                     .build()
             )
     }
@@ -27,7 +29,11 @@ class AgentsApi(user: User): BaseApi(EnvConfig.AGENTS_ENDPOINT, user) {
             .delete("name:$agentName")
             .then().spec(
                 ResponseSpecBuilder()
-                    .expectStatusCode(Matchers.equalTo(HttpStatus.SC_NO_CONTENT))
+                    .expectStatusCode(
+                        anyOf(
+                            equalTo(HttpStatus.SC_NO_CONTENT)
+                        )
+                    )
                     .build()
             )
     }

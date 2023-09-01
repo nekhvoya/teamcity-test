@@ -5,7 +5,7 @@ import org.testng.annotations.Test
 
 class LoginTest: BaseTest() {
     @Test
-    fun setUpNewBuild() {
+    fun login() {
         loginPage.open()
         loginPage.shouldBeOpened()
         loginPage.loginAs(users.getValue("ADMIN"))
