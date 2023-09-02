@@ -1,6 +1,7 @@
 package com.jetbrains.teamcity.ui.components
 
 import com.codeborne.selenide.Condition.attribute
+import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.PopUpMenuItem.Companion.LOG_OUT
@@ -50,5 +51,15 @@ class Header: BaseComponent(tagName("header"), "Header") {
     fun shouldHaveLoggedInUser(user: User) {
         log.info("Checking if user ${user.username} is logged in in $componentName")
         loggedInUserIcon.shouldHave(attribute("title", user.username.lowercase()))
+    }
+
+    fun shouldDisplayAdministration() {
+        log.info("Checking if administration is available for current user in $componentName")
+        administrationButton.shouldBe(visible)
+    }
+
+    fun shouldNotDisplayAdministration() {
+        log.info("Checking if administration is not available for current user in $componentName")
+        administrationButton.shouldNotBe(visible)
     }
 }

@@ -12,5 +12,6 @@ class LoginTest: BaseTest() {
 
         projectsPage.shouldBeOpened()
         projectsPage.header.shouldHaveLoggedInUser(users.getValue("ADMIN"))
+        projectsPage.header.shouldDisplayAdministration()
     }
 }

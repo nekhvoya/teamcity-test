@@ -35,6 +35,7 @@ internal class CreateUserTest: BaseTest() {
         loginPage.loginAs(createdUser)
         projectsPage.shouldBeOpened()
         projectsPage.header.shouldHaveLoggedInUser(createdUser)
+        projectsPage.header.shouldNotDisplayAdministration()
     }
 
     @AfterTest(alwaysRun = true)
