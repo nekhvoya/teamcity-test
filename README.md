@@ -135,3 +135,34 @@ Preconditions:
 | Wait for run to complete                             | Run is executed successfully                                      |
 | Open Build Log tab                                   | Build Log tab is opened                                           |
 | Expand and verify step logs                          | Step logs contain output of the test script from VCS              |
+
+6. Configure VCS triggers
+
+Preconditions:
+* admin user is logged in
+* test project is created
+* build is configured in test project
+* build step is configured
+* VCS is configured
+
+| Step                                        | Expected result                                             |
+|---------------------------------------------|-------------------------------------------------------------|
+| Open TeamCity Projects page                 | Projects page is opened, test project is displayed          |
+| Click 'Administration'                      | Administration page is opened                               |
+| Expand test project in projects list        | Created build is displayed                                  |
+| Click created build link                    | Edit Build page is opened                                   | 
+| Select 'Triggers' in sidebar                | Edit Triggers page is opened                                |
+| Click 'Add New Trigger'                     | Add Trigger dialog is opened                                |
+| Select 'VCS Trigger'                        | VCS Trigger is selected                                     |
+| Click 'Save'                                | Trigger is saved and listed on Edit Triggers page           |
+| Commit changes in configured VCS repo       | Changes are committed                                       |
+| Click 'Projects'                            | Projects page is opened                                     |
+| Expand created project, click created build | Build Configuration page is opend, successful run is listed |
+| Open Build Log tab                          | Build Log tab is opened                                     |
+| Expand and verify step logs                 | Step logs contain output of the test script from VCS        |
+
+7. Configure deployment
+
+
+8. Configure pipeline
+
