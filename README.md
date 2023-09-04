@@ -165,8 +165,6 @@ Preconditions:
 
 Preconditions:
 * admin user is logged in
-* there is test project on github containing 2 build configurations
-* build configurations contain build steps
 * project is configured in TeamCity with build steps for test project
 
 | Step                                                                  | Expected result                                                            |
@@ -188,3 +186,25 @@ Preconditions:
 | Click run link                                                        | Build Configuration page is opened, Build Overview is displayed            |
 | Open Build Log tab                                                    | Build Log tab is opened                                                    |
 | Expand and verify step logs                                           | Logs contain output of the test script from VCS                            |
+
+8. Publish artifacts
+
+* admin user is logged in
+* project with build configuration and build step is configured, VCS is configured
+* there is project in github with code producing relevant files (e.g., a building jar) 
+
+| Step                                                | Expected result                                                 |
+|-----------------------------------------------------|-----------------------------------------------------------------|
+| Open TeamCity Projects page                         | Projects page is opened, test project is displayed              |
+| Click 'Administration'                              | Administration page is opened                                   |
+| Expand test project in projects list                | Created build is displayed                                      |
+| Click build configuration link                      | Edit Build page is opened                                       | 
+| Enter path to produced file in Artifacts Path input | Path is entered                                                 |
+| Click 'Save'                                        | Changes are saved                                               |
+| Click 'Run'                                         | Build Configuration page is opened, Build Overview is displayed |
+| Wait for run to complete                            | Run is executed successfully                                    |
+| Open Artifacts tab                                  | Artifacts tab is opened, configured artifact is listed          |
+| Click 'Download all'                                | Zip archive is downloaded, archive contains configured artifact |
+
+
+
