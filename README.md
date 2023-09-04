@@ -136,6 +136,7 @@ Preconditions:
 | Open Build Log tab                                   | Build Log tab is opened                                           |
 | Expand and verify step logs                          | Step logs contain output of the test script from VCS              |
 
+
 6. Configure VCS triggers
 
 Preconditions:
@@ -161,37 +162,11 @@ Preconditions:
 | Open Build Log tab                          | Build Log tab is opened                                      |
 | Expand and verify step logs                 | Logs contain output of the test script from VCS              |
 
-7. Configure snapshot dependencies
-
-Preconditions:
-* admin user is logged in
-* project is configured in TeamCity with build steps for test project
-
-| Step                                                                  | Expected result                                                            |
-|-----------------------------------------------------------------------|----------------------------------------------------------------------------|
-| Open TeamCity Projects page                                           | Projects page is opened, test project is displayed                         |
-| Click 'Administration'                                                | Administration page is opened                                              |
-| Expand test project in projects list                                  | 2 build configurations are displayed                                       |
-| Click 2d build configuration                                          | Edit Build page is opened                                                  | 
-| Click 'Dependencies' in sidebar                                       | Edit Dependencies page is opened                                           |
-| Click 'Add new snapshot dependency'                                   | Add Snapshot Dependency dialog is opened                                   |
-| Select 1st build configuration of test project in dependency selector | Build configuration is selected                                            |
-| Click 'Save'                                                          | Snapshot Dependency dialog is created and listed on Edit Dependencies page | 
-| Click 'Run'                                                           | Build Configuration page is opened, Build Overview is displayed            |
-| Wait for run to complete                                              | Run is executed successfully                                               |
-| Open Build Log tab                                                    | Build Log tab is opened                                                    |
-| Expand and verify step logs                                           | Step logs contain output of the test script from VCS                       |
-| Open Dependencies tab                                                 | Dependencies tab is opened                                                 |
-| Select List mode                                                      | Successful run of 1st build configuration is listed                        |
-| Click run link                                                        | Build Configuration page is opened, Build Overview is displayed            |
-| Open Build Log tab                                                    | Build Log tab is opened                                                    |
-| Expand and verify step logs                                           | Logs contain output of the test script from VCS                            |
-
-8. Publish artifacts
+7. Publish artifacts
 
 * admin user is logged in
 * project with build configuration and build step is configured, VCS is configured
-* there is project in github with code producing relevant files (e.g., a building jar) 
+* there is project in github with code producing relevant files (e.g., a building jar)
 
 | Step                                                | Expected result                                                 |
 |-----------------------------------------------------|-----------------------------------------------------------------|
@@ -207,4 +182,33 @@ Preconditions:
 | Click 'Download all'                                | Zip archive is downloaded, archive contains configured artifact |
 
 
+8. Configure dependencies
 
+Preconditions:
+* admin user is logged in
+* project is configured in TeamCity with at least 2 build configurations, 1st produces artifacts
+
+| Step                                                                  | Expected result                                                                                 |
+|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| Open TeamCity Projects page                                           | Projects page is opened, test project is displayed                                              |
+| Click 'Administration'                                                | Administration page is opened                                                                   |
+| Expand test project in projects list                                  | 2 build configurations are displayed                                                            |
+| Click 2d build configuration                                          | Edit Build page is opened                                                                       | 
+| Click 'Dependencies' in sidebar                                       | Edit Dependencies page is opened                                                                |
+| Click 'Add new snapshot dependency'                                   | Add Snapshot Dependency dialog is opened                                                        |
+| Select 1st build configuration of test project in dependency selector | Build configuration is selected                                                                 |
+| Click 'Save'                                                          | Snapshot dependency is created and listed on Edit Dependencies page                             | 
+| Click 'Add new artifact dependency'                                   | Add Artifact Dependency dialog is opened                                                        |
+| Select 1st build configuration in Depend On dropdown                  | Build configuration is selected                                                                 |
+| Enter rule for copying in Artifacts Rules input                       | Rule is entered                                                                                 |
+| Click 'Save'                                                          | Artifact dependency is created and listed on Edit Dependencies page                             |
+| Click 'Run'                                                           | Build Configuration page is opened, Build Overview is displayed                                 |
+| Wait for run to complete                                              | Run is executed successfully                                                                    |
+| Open Dependencies tab                                                 | Dependencies tab is opened                                                                      |
+| Select 'Snapshot Dependencies' tab > 'List' tab                       | Successful run of 1st build configuration is listed                                             |
+| Select 'Downloaded Artifacts' tab                                     | Successful run of 1st build configuration is listed, Downloaded Artifacts dropdown is displayed |
+| Expand 'Downloaded Artifacts' dropdown                                | Artifact from 1st build is available                                                            |
+| Click expanded artifact                                               | Zip archive is downloaded, archive contains artifact                                            |
+
+
+9. Configure deployment
