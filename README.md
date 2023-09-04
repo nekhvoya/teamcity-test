@@ -145,24 +145,46 @@ Preconditions:
 * build step is configured
 * VCS is configured
 
-| Step                                        | Expected result                                             |
-|---------------------------------------------|-------------------------------------------------------------|
-| Open TeamCity Projects page                 | Projects page is opened, test project is displayed          |
-| Click 'Administration'                      | Administration page is opened                               |
-| Expand test project in projects list        | Created build is displayed                                  |
-| Click created build link                    | Edit Build page is opened                                   | 
-| Select 'Triggers' in sidebar                | Edit Triggers page is opened                                |
-| Click 'Add New Trigger'                     | Add Trigger dialog is opened                                |
-| Select 'VCS Trigger'                        | VCS Trigger is selected                                     |
-| Click 'Save'                                | Trigger is saved and listed on Edit Triggers page           |
-| Commit changes in configured VCS repo       | Changes are committed                                       |
-| Click 'Projects'                            | Projects page is opened                                     |
-| Expand created project, click created build | Build Configuration page is opend, successful run is listed |
-| Open Build Log tab                          | Build Log tab is opened                                     |
-| Expand and verify step logs                 | Step logs contain output of the test script from VCS        |
+| Step                                        | Expected result                                              |
+|---------------------------------------------|--------------------------------------------------------------|
+| Open TeamCity Projects page                 | Projects page is opened, test project is displayed           |
+| Click 'Administration'                      | Administration page is opened                                |
+| Expand test project in projects list        | Created build is displayed                                   |
+| Click build configuration link              | Edit Build page is opened                                    | 
+| Select 'Triggers' in sidebar                | Edit Triggers page is opened                                 |
+| Click 'Add New Trigger'                     | Add Trigger dialog is opened                                 |
+| Select 'VCS Trigger'                        | VCS Trigger is selected                                      |
+| Click 'Save'                                | Trigger is saved and listed on Edit Triggers page            |
+| Commit changes in configured VCS repo       | Changes are committed                                        |
+| Click 'Projects'                            | Projects page is opened                                      |
+| Expand created project, click created build | Build Configuration page is opened, successful run is listed |
+| Open Build Log tab                          | Build Log tab is opened                                      |
+| Expand and verify step logs                 | Logs contain output of the test script from VCS              |
 
-7. Configure deployment
+7. Configure snapshot dependencies
 
+Preconditions:
+* admin user is logged in
+* there is test project on github containing 2 build configurations
+* build configurations contain build steps
+* project is configured in TeamCity with build steps for test project
 
-8. Configure pipeline
-
+| Step                                                                  | Expected result                                                            |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------------|
+| Open TeamCity Projects page                                           | Projects page is opened, test project is displayed                         |
+| Click 'Administration'                                                | Administration page is opened                                              |
+| Expand test project in projects list                                  | 2 build configurations are displayed                                       |
+| Click 2d build configuration                                          | Edit Build page is opened                                                  | 
+| Click 'Dependencies' in sidebar                                       | Edit Dependencies page is opened                                           |
+| Click 'Add new snapshot dependency'                                   | Add Snapshot Dependency dialog is opened                                   |
+| Select 1st build configuration of test project in dependency selector | Build configuration is selected                                            |
+| Click 'Save'                                                          | Snapshot Dependency dialog is created and listed on Edit Dependencies page | 
+| Click 'Run'                                                           | Build Configuration page is opened, Build Overview is displayed            |
+| Wait for run to complete                                              | Run is executed successfully                                               |
+| Open Build Log tab                                                    | Build Log tab is opened                                                    |
+| Expand and verify step logs                                           | Step logs contain output of the test script from VCS                       |
+| Open Dependencies tab                                                 | Dependencies tab is opened                                                 |
+| Select List mode                                                      | Successful run of 1st build configuration is listed                        |
+| Click run link                                                        | Build Configuration page is opened, Build Overview is displayed            |
+| Open Build Log tab                                                    | Build Log tab is opened                                                    |
+| Expand and verify step logs                                           | Logs contain output of the test script from VCS                            |
