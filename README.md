@@ -28,6 +28,7 @@ If a test fails a screenshot will be made. Screenshots can be found in the follo
 | Enter username in Username input | Username is entered                        |
 | Enter password in Password input | Password is entered                        |
 | Click 'Login'                    | Projects page is opened, User is logged in |
+| Verify user permissions          | User is admin                              |
 
 2. Create project manually (Automated)
 
@@ -78,6 +79,7 @@ Preconditions:
 | Enter username of new user in Username input | Username is entered                                          |
 | Enter password of new user in Password input | Password is entered                                          |
 | Click 'Login'                                | Projects page is opened, User is logged in                   |
+| Verify user permissions                      | User doesn't have admin permissions                          |
 
 4. Create build agent
 
@@ -117,7 +119,7 @@ Preconditions:
 5. Configure build from VCS
 
 Preconditions:
-* There is test public github repository with simple maven project and teamcity build config (settings.kts)
+* There is test public Github repository with simple maven project and teamcity build config (settings.kts)
 * admin user is logged in
 
 | Step                                                 | Expected result                                                   |
@@ -125,7 +127,7 @@ Preconditions:
 | Open TeamCity Projects page                          | Projects page is opened, test project is displayed                |
 | Click 'Create New Project' button (top right corner) | Create Project page is opened                                     |
 | Select 'From Repository URL' tab                     | Create From VCS form is displayed                                 |
-| Enter github repo URL                                | Repo URL is entered                                               |
+| Enter Github repo URL                                | Repo URL is entered                                               |
 | Click 'Proceed'                                      | Create Project From URL form is opened                            |
 | Verify VCS settings radio buttons                    | 'Import settings from .teamcity/settings.kts' is selected         |
 | Enter unique project name                            | Project name is entered                                           |
@@ -166,7 +168,7 @@ Preconditions:
 
 * admin user is logged in
 * project with build configuration and build step is configured, VCS is configured
-* there is project in github with code producing relevant files (e.g., a building jar)
+* there is project in Github with code producing relevant files (e.g., a building jar)
 
 | Step                                                | Expected result                                                 |
 |-----------------------------------------------------|-----------------------------------------------------------------|
@@ -212,3 +214,108 @@ Preconditions:
 
 
 9. Configure deployment
+
+Preconditions:
+* admin user is logged in
+* there is Github repo with test docker file
+* project is configured in TeamCity with configured VCS and 1 build configuration building a docker image
+* there is test dockerhub account
+
+| Step                                                                  | Expected result                                                             |
+|-----------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| Open TeamCity Projects page                                           | Projects page is opened, test project is displayed                          |
+| Click 'Administration'                                                | Administration page is opened                                               |
+| Click test project in projects list                                   | Edit project page is opened                                                 |
+| Click 'Connections' in sidebar                                        | Connections form is opened                                                  |
+| Click 'Add Connection'                                                | Add Connection dialog is opened                                             |
+| Select 'Docker Reguistry' as Connection Type                          | Docker Registry is selected                                                 |
+| Enter username                                                        | Username is entered                                                         |
+| Enter password                                                        | Password is entered                                                         |
+| Click 'Save'                                                          | Add Connection dialog is closed, connection is created                      | 
+| Click 'General Settings' in sidebar                                   | General Settings form is opened                                             |
+| Click 'Create build configuration'                                    | Create Build page is opened                                                 |
+| Enter build name in Name input                                        | Build name is entered                                                       |
+| Click 'Show advanced options'                                         | Build configuration type option is displayed                                | 
+| Expand 'Build configuration type' > Select 'Deployment'               | Deployment type is selected                                                 |
+| Click 'Create'                                                        | Edit Build page is opened                                                   |
+| Select 'Build Steps' in side bar                                      | Edit Build Runner page is opened                                            |
+| Click '+ Add Build Step'                                              | New Build Step page is opened                                               |
+| Select 'Command Line'                                                 | New Build Step: Command Line form is opened                                 |  
+| Enter name in Step name input                                         | Step name is entered                                                        |
+| Enter docker push command in Custom script input                      | Command is entered                                                          |
+| Click 'Save'                                                          | Edit Build Runner page is opened, build step is created                     |
+| Click 'Build Features' in sidebar                                     | Edit Build Features page is opened                                          |
+| Click 'Add Build Feature'                                             | Add Build Feature dialog is opened                                          |
+| Select 'Docker Support' build feature                                 | Docker Support is selected                                                  |
+| Click 'Add Registry Connection'                                       | Add Registry Connection dialog is opened                                    |
+| Select created docker connection                                      | Docker connection is selected                                               |
+| Click 'Add'                                                           | Add Registry Connection dialog is closed, docker connection is added        |
+| Click 'Save'                                                          | Add Registry Connection dialog is closed, docker support feature is created |
+| Click 'Dependencies' in sidebar                                       | Edit Dependencies page is opened                                            |
+| Click 'Add new snapshot dependency'                                   | Add Snapshot Dependency dialog is opened                                    |
+| Select 1st build configuration of test project in dependency selector | Build configuration is selected                                             |
+| Click 'Save'                                                          | Snapshot dependency is created and listed on Edit Dependencies page         | 
+| Click 'Projects' in header                                            | Projects page is opened, test project is displayed                          |
+| Expand test project                                                   | Created build is displayed                                                  |
+| Click regular build configuration link                                | Build configuration page is opened                                          |
+| Click 'Run'                                                           | Run is started                                                              |
+| Wait for run to complete                                              | Run is executed successfully                                                |
+| Click build run                                                       | Build Configuration page is opened, Build Overview is displayed             |
+| Expand 'Deployments'                                                  | Deployment build is listed                                                  |
+| Click 'Deploy'                                                        | Run is started                                                              |
+| Wait for run to complete                                              | Run is executed successfully                                                |
+| Verify deployment                                                     | Image is available in Dockerhub                                             |
+
+
+10. Viewing test results
+
+Preconditions:
+* admin user is logged in
+* there is Github repo with test projects with unit tests (one test failing)
+* project is configured in TeamCity with configured VCS
+
+| Step                          | Expected result                                                                  |
+|-------------------------------|----------------------------------------------------------------------------------|
+| Open TeamCity Projects page   | Projects page is opened, test project is displayed                               |
+| Expand test project           | Created build is displayed                                                       |
+| Click build link              | Build configuration page is opened                                               |
+| Click 'Run'                   | Run is started                                                                   |
+| Wait for run to complete      | Run completed with failed tests                                                  |
+| Click build run               | Build Configuration page is opened, Build Overview is displayed                  |
+| Open Tests tab                | Tests tab is opened                                                              |
+| Verify test list              | All tests are listed, results are displayed (all successful and 1 failed)        |
+| Click failed test             | Test details are expanded, stacktrace is displayed                               |
+| Click 'Open Build Log'        | Build Log popup is opened, build logs are displayed with summary of test results |
+
+
+11. Configuring SSO authentication modules
+
+Preconditions:
+* admin user is logged in
+* there is test account on Github, TeamCity app is registered on Github
+
+| Step                                                                   | Expected result                                                         |
+|------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Open TeamCity Projects page                                            | Projects page is opened, test project is displayed                      |
+| Click 'Administration'                                                 | Administration page is opened                                           |
+| Click root project                                                     | Edit project page is opened                                             |
+| Click 'Connections' in sidebar                                         | Connections form is displayed                                           |
+| Click 'Add Connection'                                                 | Add Connection dialog is opened                                         |
+| Enter Github client ID                                                 | Client ID is entered                                                    |
+| Enter Github client secret                                             | Client secret is added                                                  |
+| Click 'Save'                                                           | Add Connection dialog closed, connection is created                     |
+| Click 'Administration'                                                 | Administration page is opened                                           |
+| Click 'Authentication' in sidebar                                      | Authentication form is displayed                                        |
+| Click 'Add Module'                                                     | Add Module dialog is opened                                             |
+| Select 'Github.com' in New Module dropdown                             | Github.com option is selected                                           |
+| Verify Allow creating new users on the first login checkbox is checked | Allow creating new users on the first login checkbox is checked         |
+| Click 'Add'                                                            | Add Module dialog is closed, new SSO module is created                  |
+| Log out                                                                | Login page is opened                                                    |
+| Click Github icon                                                      | Github Authorization page is opened                                     | 
+| Click 'Authorise user'                                                 | Projects page is opened, User is logged in with Github account          |
+| Verify user permissions                                                | User doesn't have admin permissions                                     |
+| Log out                                                                | Login page is opened                                                    |
+| Log in as Admin                                                        | Projects page is opened                                                 |
+| Click 'Administration'                                                 | Administration page is opened                                           |
+| Click 'Users' in sidebar                                               | Users form is opened                                                    |
+| Verify list of users                                                   | New user is created with info from Github account, user is not an admin |
