@@ -10,7 +10,6 @@ import com.github.dockerjava.core.DefaultDockerClientConfig
 import com.github.dockerjava.core.DockerClientBuilder
 import com.jetbrains.teamcity.config.TestAgentConfig
 import org.apache.commons.io.FileUtils.forceDelete
-import java.net.InetAddress.getLocalHost
 import java.nio.file.Path
 import kotlin.io.path.createTempDirectory
 
@@ -28,11 +27,11 @@ class DockerManager {
         dockerClient = DockerClientBuilder.getInstance(config).build()
     }
 
-    fun createAgentContainer(agentName: String): String {
+    fun createAgentContainer(serverUrl: String, agentName: String): String {
         dockerClient.pullImageCmd(TestAgentConfig.AGENT_IMAGE).exec(PullImageResultCallback()).awaitCompletion()
         val container: CreateContainerResponse = dockerClient
             .createContainerCmd(TestAgentConfig.AGENT_IMAGE)
-            .withEnv("SERVER_URL=http://${getLocalHost().hostAddress}:8111", "AGENT_NAME=$agentName")
+            .withEnv("SERVER_URL=$serverUrl", "AGENT_NAME=$agentName")
             .withHostConfig(
                 HostConfig.newHostConfig().withBinds(Bind(tempConfig.toFile().absolutePath, Volume(TestAgentConfig.AGENT_CONFIG_PATH))))
             .exec()

@@ -35,11 +35,11 @@ class AgentsOverviewPage: BasePage(cssSelector("[class*=AgentsOverviewPage__page
 
     fun shouldDisplayUnauthorizedAgents() {
         log.info("Checking that unauthorized agents are displayed on $pageName")
-        unauthorizedAgentsCount.shouldBe(visible, ofSeconds(10))
+        unauthorizedAgentsCount.shouldBe(visible, ofSeconds(20))
     }
 
     fun shouldListAgent(agentName: String) {
         log.info("Checking that agent $agentName is listed on $pageName")
-        agentRow(agentName).shouldBe(visible, ofSeconds(15))
+        agentRow(agentName).shouldBe(visible, ofSeconds(20))
     }
 }

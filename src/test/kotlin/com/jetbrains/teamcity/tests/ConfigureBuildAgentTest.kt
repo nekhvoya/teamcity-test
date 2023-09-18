@@ -14,11 +14,8 @@ import com.jetbrains.teamcity.api.ProjectsApi
 import com.jetbrains.teamcity.data.*
 import com.jetbrains.teamcity.utils.DockerManager
 import com.jetbrains.teamcity.utils.randomString
-import org.testng.annotations.AfterMethod
-import org.testng.annotations.AfterTest
-import org.testng.annotations.BeforeMethod
-import org.testng.annotations.BeforeTest
-import org.testng.annotations.Test
+import org.testng.annotations.*
+import java.net.InetAddress.getLocalHost
 import java.time.Duration.ofSeconds
 
 
@@ -33,7 +30,7 @@ class ConfigureBuildAgentTest: BaseTest() {
     @BeforeTest
     fun setUpDockerContainer() {
         agentName = randomString()
-        agentId = dockerManger.createAgentContainer(agentName)
+        agentId = dockerManger.createAgentContainer("http://${getLocalHost().hostAddress}:8111", agentName)
     }
 
     @BeforeMethod
@@ -97,7 +94,7 @@ class ConfigureBuildAgentTest: BaseTest() {
         projectsPage.expandProject(createdProject)
         projectsPage.shouldListBuildForProject(createdProject, createdBuild)
         projectsPage.runBuild(createdBuild)
-        projectsPage.shouldListSuccessfulBuild(createdBuild, ofSeconds(10))
+        projectsPage.shouldListSuccessfulBuild(createdBuild, ofSeconds(20))
         projectsPage.shouldListAgentForBuild(createdBuild, agentName)
     }
 

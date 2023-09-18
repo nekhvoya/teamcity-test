@@ -9,12 +9,14 @@ import com.jetbrains.teamcity.api.ProjectsApi
 import com.jetbrains.teamcity.data.Project
 import com.jetbrains.teamcity.data.VcsRoot
 import com.jetbrains.teamcity.utils.GitRepo
+import com.jetbrains.teamcity.utils.createFile
 import com.jetbrains.teamcity.utils.randomString
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.AfterTest
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.nio.file.Path
+import java.nio.file.Paths
 import java.time.Duration.ofSeconds
 
 class ConfigureBuildManuallyTest: BaseTest() {
@@ -50,7 +52,8 @@ class ConfigureBuildManuallyTest: BaseTest() {
 
         // Configure VCS
         val output: String = randomString()
-        val scriptFile: Path = git.commitFile("test.ps1", "echo ${output}")
+        val scriptFile: Path = createFile(Paths.get(git.tempRepo.toFile().absolutePath, "test.ps1"), "echo $output")
+        git.commitFile(scriptFile)
 
         editVcsRootPage.selectVcsType(VcsType.GIT)
         editVcsRootPage.setVcsName(createdVcsRoot.name)

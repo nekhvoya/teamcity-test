@@ -44,7 +44,7 @@ class ConfigureBuildFromVcsTest: BaseTest() {
         editBuildPage.clickRun()
         buildConfigurationPage.shouldBeOpened()
         buildConfigurationPage.buildOverview.shouldBeVisible()
-        buildConfigurationPage.shouldDisplayResult(SUCCESS, Duration.ofSeconds(10))
+        buildConfigurationPage.shouldDisplayResult(SUCCESS, Duration.ofSeconds(15))
         buildConfigurationPage.openOverviewTab(BUILD_LOG)
         buildConfigurationPage.buildLog.openStepLog(MAVEN)
         buildConfigurationPage.buildLog.shouldDisplayOutPutLog(output)
