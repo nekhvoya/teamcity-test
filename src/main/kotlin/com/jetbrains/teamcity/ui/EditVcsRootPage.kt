@@ -1,6 +1,5 @@
 package com.jetbrains.teamcity.ui
 
-import com.codeborne.selenide.Condition
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig.Companion.EDIT_VCS_ROOT_URL
@@ -10,7 +9,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
 class EditVcsRootPage: BasePage(className("editVcsRootPage"), "Edit Vcs Root Page", EDIT_VCS_ROOT_URL) {
-    private val projectCreatedMessage: SelenideElement = `$`(id("unprocessed_buildTypeCreated"))
     private val vcsTypeDropdown: SelenideElement = `$`(id("-ufd-teamcity-ui-vcsName"))
     private val vcsTypeOption = { option: String -> `$`("li[data-title=${option}]") }
     private val nameInput = `$`(id("vcsRootName"))
@@ -23,33 +21,28 @@ class EditVcsRootPage: BasePage(className("editVcsRootPage"), "Edit Vcs Root Pag
     }
 
     fun selectVcsType(vcsType: String) {
-        log.info("Selecting VCS type $vcsType")
+        log.info("Selecting VCS type $vcsType on $pageName")
         vcsTypeDropdown.click()
         vcsTypeOption(vcsType).click()
     }
 
     fun setVcsName(name: String) {
-        log.info("Typing VCS name $name")
+        log.info("Typing VCS name $name on $pageName")
         nameInput.type(name)
     }
 
     fun setUrl(url: String) {
-        log.info("Typing VCS url $url")
+        log.info("Typing VCS url $url on $pageName")
         urlInput.type(url)
     }
 
     fun setBranch(branch: String) {
-        log.info("Typing branch $branch")
+        log.info("Typing branch $branch on $pageName")
         branchInput.type(branch)
     }
 
     fun save() {
-        log.info("Clicking Create button")
+        log.info("Clicking Create button on $pageName")
         createButton.click()
-    }
-
-    fun shouldHaveBuildConfigurationCreatedMessage() {
-        log.info("Checking if build created message is visible")
-        projectCreatedMessage.shouldBe(Condition.visible)
     }
 }

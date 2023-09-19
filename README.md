@@ -9,6 +9,7 @@ This project implements automation of the testing process for the TeamCity serve
 * TeamCity server running locally on port 8111 (version 2023.05.2)
 * TeamCity has a build agent configured running locally (a Win10 machine)
 * TeamCity has an admin account with credentials admin/admin
+* Docker instance is up and running locally
 
 ### How to run tests
 Tests can be run from the IDE by selecting a test and clicking the Run button or by running the following command: `./gradlew test`.
@@ -148,21 +149,22 @@ Preconditions:
 * build step is configured
 * VCS is configured
 
-| Step                                        | Expected result                                              |
-|---------------------------------------------|--------------------------------------------------------------|
-| Open TeamCity Projects page                 | Projects page is opened, test project is displayed           |
-| Click 'Administration'                      | Administration page is opened                                |
-| Expand test project in projects list        | Created build is displayed                                   |
-| Click build configuration link              | Edit Build page is opened                                    | 
-| Select 'Triggers' in sidebar                | Edit Triggers page is opened                                 |
-| Click 'Add New Trigger'                     | Add Trigger dialog is opened                                 |
-| Select 'VCS Trigger'                        | VCS Trigger is selected                                      |
-| Click 'Save'                                | Trigger is saved and listed on Edit Triggers page            |
-| Commit changes in configured VCS repo       | Changes are committed                                        |
-| Click 'Projects'                            | Projects page is opened                                      |
-| Expand created project, click created build | Build Configuration page is opened, successful run is listed |
-| Open Build Log tab                          | Build Log tab is opened                                      |
-| Expand and verify step logs                 | Logs contain output of the test script from VCS              |
+| Step                                         | Expected result                                    |
+|----------------------------------------------|----------------------------------------------------|
+| Open TeamCity Projects page                  | Projects page is opened, test project is displayed |
+| Click 'Administration'                       | Administration page is opened                      |
+| Expand test project in projects list         | Created build is displayed                         |
+| Click build configuration link               | Edit Build page is opened                          | 
+| Select 'Version Control Settings' in sidebar | Version Control Settings page is opened            |
+| Verify that VCS was polled at least once     | Date of latest check for changes is displayed      |
+| Select 'Triggers' in sidebar                 | Edit Triggers page is opened                       |
+| Click 'Add New Trigger'                      | Add Trigger dialog is opened                       |
+| Select 'VCS Trigger'                         | VCS Trigger is selected                            |
+| Click 'Save'                                 | Trigger is saved and listed on Edit Triggers page  |
+| Click 'Projects'                             | Projects page is opened                            |
+| Expand created project                       | Created build is displayed                         |
+| Commit changes in configured VCS repo        | Changes are committed                              |
+| Wait for run to start and complete           | Run is executed successfully                       |
 
 7. Publish artifacts
 

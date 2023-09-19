@@ -7,7 +7,7 @@ import org.openqa.selenium.By.id
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class EditRequirementDialog: BaseBuildStepForm(id("editRequirementDialog"), "Edit Requirement Dialog") {
+class EditRequirementDialog: BaseComponent(id("editRequirementDialog"), "Edit Requirement Dialog") {
     private val parameterNameInput: SelenideElement = `$`(id("parameterName"))
     private val parameterValueInput: SelenideElement = `$`(id("parameterValue"))
     private val conditionSelect: SelenideElement = `$`(id("requirementType"))
@@ -20,9 +20,7 @@ class EditRequirementDialog: BaseBuildStepForm(id("editRequirementDialog"), "Edi
     fun createRequirement(requirement: Requirement) {
         typeParameterName(requirement.parameter)
         selectCondition(requirement.condition)
-        if (requirement.value != null) {
-            typeParameterValue(requirement.value)
-        }
+        requirement.value?.let { typeParameterValue(it) }
         clickSave()
     }
 

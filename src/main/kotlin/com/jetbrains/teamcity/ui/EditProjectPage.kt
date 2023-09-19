@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory.getLogger
 class EditProjectPage: BasePage(className("editProjectPage"), "Edit Project Page", EDIT_PROJECT_URL) {
     private val projectCreatedMessage: SelenideElement = `$`(id("message_projectCreated"))
     private val projectCreatedFromVcsMessage: SelenideElement = `$`(id("message_objectsCreated"))
-    private val projectUpdatedMessage: SelenideElement = `$`(id("message_projectUpdated"))
-    private val saveButton: SelenideElement = `$`(".saveButtonsBlock [type=submit]")
     private val createBuildConfigurationButton: SelenideElement = `$`("[href*=createBuild]")
     private val buildConfigurationNameCell =
         { name: String -> `$`(id("configurations")).find(xpath(".//td[contains(@class, 'name') and contains(., '$name')]")) }
@@ -24,11 +22,6 @@ class EditProjectPage: BasePage(className("editProjectPage"), "Edit Project Page
 
     companion object {
         val log: Logger = getLogger(EditProjectPage::class.java.simpleName)
-    }
-
-    fun save() {
-        log.info("Clicking Save button")
-        saveButton.click()
     }
 
     fun clickCreateBuild() {
@@ -44,11 +37,6 @@ class EditProjectPage: BasePage(className("editProjectPage"), "Edit Project Page
     fun shouldHaveProjectCreatedMessage() {
         log.info("Checking if project created message is visible on $pageName")
         projectCreatedMessage.shouldBe(visible)
-    }
-
-    fun shouldHaveProjectUpdatedMessage() {
-        log.info("Checking if project updated message is visible on $pageName")
-        projectUpdatedMessage.shouldBe(visible)
     }
 
     fun shouldHaveProjectCreatedFromVcsMessage() {

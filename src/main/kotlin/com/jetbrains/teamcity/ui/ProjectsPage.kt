@@ -1,6 +1,7 @@
 package com.jetbrains.teamcity.ui
 
-import com.codeborne.selenide.Condition.*
+import com.codeborne.selenide.Condition.text
+import com.codeborne.selenide.Condition.visible
 import com.codeborne.selenide.Selenide.`$`
 import com.codeborne.selenide.SelenideElement
 import com.jetbrains.teamcity.config.EnvConfig.Companion.PROJECTS_URL
@@ -22,10 +23,6 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
         projectContainer.find("[class*=Details__button]") }
     private val projectArrow = { projectContainer: SelenideElement ->
         projectContainer.find("[class*=Subproject__arrow]") }
-    private val projectLink = { projectContainer: SelenideElement ->
-        projectContainer.find("[href*=project]") }
-    private val buildLink = { projectContainer: SelenideElement, buildName: String ->
-        projectContainer.find("[href*=buildConfiguration][title=${buildName}]") }
     private val buildContainer = { buildName: String ->
         `$`(xpath("//div[contains(@class, 'BuildsByBuildType__container') and contains(., '$buildName')]")) }
     private val runButton = { buildContainer: SelenideElement ->
@@ -42,22 +39,12 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     }
 
     fun createNewProject() {
-        log.info("Clicking New Project button")
+        log.info("Clicking New Project button on $pageName")
         newProjectButton.click()
     }
 
-    fun clickProject(project: Project) {
-        log.info("Clicking build link ${project.name}")
-        projectLink(projectContainer(project.name)).click()
-    }
-
-    fun clickBuildFromProject(project: Project, build: Build) {
-        log.info("Clicking build link ${build.name}")
-        buildLink(projectContainer(project.name), build.name).click()
-    }
-
     fun expandProject(project: Project) {
-        log.info("Expanding project $project")
+        log.info("Expanding project $project on $pageName")
         if (isProjectExpanded(project)) {
             log.warn("Project ${project.name} is already expanded")
             return
@@ -66,27 +53,22 @@ class ProjectsPage: BasePage(cssSelector("[class*=ProjectPageHeader]"), "Project
     }
 
     fun runBuild(build: Build) {
-        log.info("Clicking run button of build ${build.name}")
+        log.info("Clicking run button of build ${build.name} on $pageName")
         runButton(buildContainer(build.name)).click()
     }
 
     fun isProjectExpanded(project: Project): Boolean {
-        log.info("Checking if project $project is expanded")
+        log.info("Checking if project $project is expanded on $pageName")
         return projectDetailsButton(projectContainer(project.name)).getAttribute("aria-expanded").toBoolean()
     }
 
-    fun shouldListProject(project: Project) {
-        log.info("Checking if project ${project.name} is listed")
-        projectLink(projectContainer(project.name)).shouldHave(attribute("title", project.name))
-    }
-
     fun shouldListBuildForProject(project: Project, build: Build) {
-        log.info("Checking if build ${build.name} is listed")
+        log.info("Checking if build ${build.name} is listed on $pageName")
         projectContainer(project.name).find("[href*=buildConfiguration][title=${build.name}]").shouldBe(visible)
     }
 
     fun shouldListSuccessfulBuild(build: Build, timeout: Duration) {
-        log.info("Checking if build ${build.name} completed successfully")
+        log.info("Checking if build ${build.name} completed successfully on $pageName")
         successLabel(buildContainer(build.name)).shouldBe(visible, timeout)
     }
 

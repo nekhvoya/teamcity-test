@@ -18,7 +18,7 @@ class NewBuildStepPage: BasePage(id("select-runner-flatten"), "New Build Step Pa
     }
 
     fun selectRunner(runner: String) {
-        log.info("Selecting runner $runner")
+        log.info("Selecting runner $runner on $pageName")
         runnerItem(runner).click()
     }
 }

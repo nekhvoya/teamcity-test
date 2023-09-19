@@ -8,7 +8,7 @@ import org.openqa.selenium.By.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class ProjectsForm: BaseComponent(className("projectHierarchy"), "Projects Form") {
+class ProjectsComponent: BaseComponent(className("projectHierarchy"), "Projects Form") {
     private val projectRow = { projectName: String ->
         `$`(xpath("//tr[contains(@class, 'project')][.//a[contains(text(), '$projectName')]]"))
     }
@@ -18,11 +18,11 @@ class ProjectsForm: BaseComponent(className("projectHierarchy"), "Projects Form"
     private val buildLink = { buildName: String -> `$`(xpath("//tr[contains(@class, 'build_type')]//a[contains(., '$buildName')]")) }
 
     companion object {
-        val log: Logger = getLogger(ProjectsForm::class.java.simpleName)
+        val log: Logger = getLogger(ProjectsComponent::class.java.simpleName)
     }
 
     fun expandProject(project: Project) {
-        log.info("Expanding project $project")
+        log.info("Expanding project $project on $componentName")
         if (isProjectExpanded(project)) {
             log.warn("Project ${project.name} is already expanded on $componentName")
             return

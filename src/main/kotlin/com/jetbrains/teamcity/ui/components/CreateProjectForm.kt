@@ -8,7 +8,7 @@ import org.openqa.selenium.By.id
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class CreateProjectForm: BaseBuildStepForm(id("editProjectForm"), "Create Project Form") {
+class CreateProjectForm: BaseSubmitForm(id("editProjectForm"), "Create Project Form") {
     private val nameInput: SelenideElement = `$`(id("name"))
     private val idInput: SelenideElement = `$`(id("externalId"))
     private val createButton: SelenideElement = `$`(id("createProject"))

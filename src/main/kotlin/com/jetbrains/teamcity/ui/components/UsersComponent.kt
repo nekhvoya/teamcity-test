@@ -9,17 +9,18 @@ import org.openqa.selenium.By.xpath
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class UsersForm: BaseComponent(id("userTable"), "Users Form") {
+class UsersComponent: BaseComponent(id("userTable"), "Users Form") {
     private val createAccountButton: SelenideElement = `$`(".usersActions .addNew")
     private val userCreatedMessage: SelenideElement = `$`(id("message_userCreated"))
-    private val userListRow = { user: String -> `$`(xpath("//table[contains(@class, 'userList')]//tr[.//td[contains(@class, 'username') and contains(., '$user')]]")) }
+    private val userListRow = { user: String ->
+        `$`(xpath("//table[contains(@class, 'userList')]//tr[.//td[contains(@class, 'username') and contains(., '$user')]]")) }
 
     companion object {
-        val log: Logger = getLogger(UsersForm::class.java.simpleName)
+        val log: Logger = getLogger(UsersComponent::class.java.simpleName)
     }
 
     fun clickCreateUserAccount() {
-        log.info("Clicking Create User Account button")
+        log.info("Clicking Create User Account button on $componentName")
         createAccountButton.click()
     }
 

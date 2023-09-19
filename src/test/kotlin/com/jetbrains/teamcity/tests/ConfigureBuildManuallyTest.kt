@@ -27,7 +27,7 @@ class ConfigureBuildManuallyTest: BaseTest() {
     @BeforeMethod
     fun setUpGitRepo() {
         git = GitRepo()
-        createdVcsRoot = VcsRoot(randomString(), git.url, git.branch)
+        createdVcsRoot = VcsRoot(name = randomString(), url = git.url, defaultBranch = git.branch)
     }
 
     @UserAccount("ADMIN")
@@ -57,8 +57,8 @@ class ConfigureBuildManuallyTest: BaseTest() {
 
         editVcsRootPage.selectVcsType(VcsType.GIT)
         editVcsRootPage.setVcsName(createdVcsRoot.name)
-        editVcsRootPage.setUrl(createdVcsRoot.url)
-        editVcsRootPage.setBranch(createdVcsRoot.defaultBranch)
+        editVcsRootPage.setUrl(createdVcsRoot.url!!)
+        editVcsRootPage.setBranch(createdVcsRoot.defaultBranch!!)
         editVcsRootPage.save()
         editVcsSettingsPage.shouldBeOpened()
         editVcsSettingsPage.shouldHaveVcsRootUpdatedMessage()

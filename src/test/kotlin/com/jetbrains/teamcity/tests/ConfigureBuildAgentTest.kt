@@ -45,7 +45,7 @@ class ConfigureBuildAgentTest: BaseTest() {
             Steps(listOf(
                 Step(randomString(), SIMPLE_RUNNER,
                 Properties(listOf(
-                    Property(SCRIPT_CONTENT, "pwd && ls -al && echo test"),
+                    Property(SCRIPT_CONTENT, "pwd && echo test"),
                     Property(STEP_MODE, "default"),
                     Property(USE_CUSTOM_SCRIPT, "true"),
                 ))
@@ -79,7 +79,7 @@ class ConfigureBuildAgentTest: BaseTest() {
         administrationPage.projectsForm.expandProject(createdProject)
         administrationPage.projectsForm.clickBuildLink(createdBuild)
         editBuildPage.shouldBeOpened()
-        editBuildPage.adminSidebar.selectMenuItem(AGENT_REQUIREMENTS)
+        editBuildPage.sidebar.selectMenuItem(AGENT_REQUIREMENTS)
         editRequirementsPage.shouldBeOpened()
         editRequirementsPage.clickAddNewRequirement()
         editRequirementsPage.editRequirementDialog.shouldBeVisible()

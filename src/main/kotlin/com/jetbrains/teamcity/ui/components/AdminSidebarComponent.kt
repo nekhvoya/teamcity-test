@@ -15,7 +15,7 @@ class AdminSidebarComponent: BaseComponent(className("admin-sidebar"), "Admin Si
     }
 
     fun selectMenuItem(item: String) {
-        log.info("Clicking menu item $item")
+        log.info("Clicking menu item $item on $componentName")
         menuItem(item).click()
     }
 }

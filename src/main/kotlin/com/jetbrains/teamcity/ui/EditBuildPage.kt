@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory.getLogger
 class EditBuildPage: BasePage(id("buildTypeSettingsContainerInner"), "Edit Build Page", EDIT_BUILD_URL) {
     private val runButton: SelenideElement = `$`(xpath("//button[contains(text(), 'Run')]"))
 
-    val adminSidebar = AdminSidebarComponent()
+    val sidebar = AdminSidebarComponent()
 
     companion object {
         val log: Logger = getLogger(EditBuildPage::class.java.simpleName)

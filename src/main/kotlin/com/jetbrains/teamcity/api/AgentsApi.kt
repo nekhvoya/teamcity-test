@@ -6,7 +6,6 @@ import io.restassured.builder.ResponseSpecBuilder
 import io.restassured.http.ContentType.ANY
 import io.restassured.http.ContentType.TEXT
 import org.apache.http.HttpStatus
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.anyOf
 import org.hamcrest.Matchers.equalTo
 

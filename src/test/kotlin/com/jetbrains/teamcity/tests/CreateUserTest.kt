@@ -16,6 +16,7 @@ internal class CreateUserTest: BaseTest() {
         projectsPage.open()
         projectsPage.shouldBeOpened()
 
+        // Create new user
         projectsPage.header.clickAdministration()
         administrationPage.shouldBeOpened()
         administrationPage.sidebar.selectMenuItem(USERS)
@@ -31,6 +32,7 @@ internal class CreateUserTest: BaseTest() {
 
         administrationPage.header.logout()
 
+        // Log in as newly created user
         loginPage.shouldBeOpened()
         loginPage.loginAs(createdUser)
         projectsPage.shouldBeOpened()

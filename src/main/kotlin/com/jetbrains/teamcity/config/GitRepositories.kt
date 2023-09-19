@@ -8,9 +8,9 @@ class GitRepositories {
 
         init {
             repositories.put("test-java-project",
-                VcsRoot("test-java-project",
-                    "https://github.com/rgGXrzFksh/test-java-project.git",
-                    "master"))
+                VcsRoot(name = "test-java-project",
+                    url = "https://github.com/rgGXrzFksh/test-java-project.git",
+                    defaultBranch = "master"))
         }
 
     }

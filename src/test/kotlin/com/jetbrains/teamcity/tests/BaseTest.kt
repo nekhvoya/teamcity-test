@@ -26,7 +26,6 @@ abstract class BaseTest {
     protected val editProjectPage = EditProjectPage()
     protected val editVcsRootPage = EditVcsRootPage()
     protected val editVcsSettingsPage = EditVcsSettingsPage()
-    protected val projectConfigurationPage = ProjectConfigurationPage()
     protected val buildConfigurationPage = BuildConfigurationPage()
     protected val editBuildPage = EditBuildPage()
     protected val editBuildRunnersPage = EditBuildRunnersPage()
@@ -37,6 +36,7 @@ abstract class BaseTest {
     protected val agentDetailsPage = AgentDetailsPage()
     protected val editRequirementsPage = EditRequirementsPage()
     protected val projectSetupPage = ProjectSetupPage()
+    protected val editTriggersPage = EditTriggersPage()
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(BaseTest::class.java.simpleName)

@@ -14,6 +14,14 @@ class StepProperty {
     }
 }
 
+class VcsProperty {
+    companion object {
+        const val AUTH = "authMethod"
+        const val BRANCH = "branch"
+        const val URL ="url"
+    }
+}
+
 class Cookie {
     companion object {
         const val SESSION = "TCSESSIONID"
@@ -23,7 +31,6 @@ class Cookie {
 
 class Runner {
     companion object {
-        const val CMD = "Command Line"
         const val POWER_SHELL = "PowerShell"
         const val MAVEN = "Maven"
     }
@@ -55,6 +62,13 @@ class AdminSidebarItem {
     }
 }
 
+class BuildSidebarItem {
+    companion object {
+        const val TRIGGERS = "editTriggers"
+        const val VCS = "editBuildTypeVcsRoots"
+    }
+}
+
 class PopUpMenuItem {
     companion object {
         const val LOG_OUT = "Logout"
@@ -71,6 +85,12 @@ class AgentStatus {
 class AgentRequirement {
     companion object {
         const val TEAMCITY_AGENT_NAME = "teamcity.agent.name"
+    }
+}
+
+class Trigger {
+    companion object {
+        const val VCS_TRIGGER = "VCS Trigger"
     }
 }
 

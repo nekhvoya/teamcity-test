@@ -14,7 +14,7 @@ class BreadcrumbsComponent: BaseComponent(id("breadcrumbsWrapper"), "Bread Crumb
     }
 
     fun runFirstBuild() {
-        log.info("Clicking Run First Build")
+        log.info("Clicking Run First Build on $componentName")
         runFirstBuildButton.click()
     }
 }

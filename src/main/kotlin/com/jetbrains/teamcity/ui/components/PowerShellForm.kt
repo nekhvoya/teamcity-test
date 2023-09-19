@@ -6,7 +6,7 @@ import org.openqa.selenium.By.id
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 
-class PowerShellForm: BaseBuildStepForm(id("powershell_scriptFile"), "Power Shell Form") {
+class PowerShellForm: BaseSubmitForm(id("powershell_scriptFile"), "Power Shell Form") {
     private val scriptInput: SelenideElement = `$`(id("jetbrains_powershell_script_file"))
 
     companion object {
@@ -14,7 +14,7 @@ class PowerShellForm: BaseBuildStepForm(id("powershell_scriptFile"), "Power Shel
     }
 
     fun setScriptFile(scriptFilePath: String) {
-        log.info("Typing script file path$scriptFilePath")
+        log.info("Typing script file path $scriptFilePath on $componentName")
         scriptInput.type(scriptFilePath)
     }
 }

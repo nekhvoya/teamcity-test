@@ -20,7 +20,7 @@ class GitRepo {
     }
 
     fun commitFile(file: Path) {
-        git.add().addFilepattern(file.toFile().absolutePath).call()
+        git.add().addFilepattern(file.fileName.toString()).call()
         git.commit().setMessage(randomString()).call()
     }
 

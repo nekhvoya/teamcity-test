@@ -21,6 +21,7 @@ class ConfigureBuildFromVcsTest: BaseTest() {
     @UserAccount("ADMIN")
     @Test
     fun configureBuildFromVcs() {
+        // Configure project from VCS
         projectsPage.open()
         projectsPage.shouldBeOpened()
         projectsPage.createNewProject()
@@ -39,6 +40,7 @@ class ConfigureBuildFromVcsTest: BaseTest() {
         editProjectPage.shouldListBuildConfiguration(buildName)
         editProjectPage.shouldListBuildStep(stepName)
 
+        // Run project from VCS
         editProjectPage.openBuildConfiguration(buildName)
         editBuildPage.shouldBeOpened()
         editBuildPage.clickRun()
