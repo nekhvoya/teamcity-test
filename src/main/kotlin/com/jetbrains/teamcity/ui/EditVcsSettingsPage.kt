@@ -27,7 +27,7 @@ class EditVcsSettingsPage: BasePage(id("editVcsSettingsForm"), "Edit Vcs Setting
 
     fun shouldHaveVcsRootUpdatedMessage() {
         log.info("Checking if VCS root updated message is visible on $pageName")
-        vcsRootUpdatedMessage.shouldBe(visible)
+        vcsRootUpdatedMessage.shouldBe(visible, ofSeconds(15))
     }
 
     fun waitForCheckForChanges() {

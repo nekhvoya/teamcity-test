@@ -6,7 +6,7 @@ This project implements automation of the testing process for the TeamCity serve
 * JDK 17
 * IDE (IntelliJ IDEA)
 * Gradle 8.3
-* TeamCity server running locally on port 8111 (version 2023.05.2)
+* TeamCity server running locally on port 8111 (version 2023.05.2, the installer for this version can be found in the main resources)
 * TeamCity has a build agent configured running locally (a Win10 machine)
 * TeamCity has an admin account with credentials admin/admin
 * Docker instance is up and running locally
@@ -230,7 +230,7 @@ Preconditions:
 | Click test project in projects list                                   | Edit project page is opened                                                 |
 | Click 'Connections' in sidebar                                        | Connections form is opened                                                  |
 | Click 'Add Connection'                                                | Add Connection dialog is opened                                             |
-| Select 'Docker Reguistry' as Connection Type                          | Docker Registry is selected                                                 |
+| Select 'Docker Registry' as Connection Type                           | Docker Registry is selected                                                 |
 | Enter username                                                        | Username is entered                                                         |
 | Enter password                                                        | Password is entered                                                         |
 | Click 'Save'                                                          | Add Connection dialog is closed, connection is created                      | 
